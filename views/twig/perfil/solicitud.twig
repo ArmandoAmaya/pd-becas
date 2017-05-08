@@ -1,0 +1,119 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/topbar/assets/examples/css/uikit/images.css">
+<link rel="stylesheet" href="public/classic/global/vendor/select2/select2.css">
+{% endblock %}
+
+{% block content %}
+
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+		<div class="page-header page-header-bordered text-center mb-10">
+			<h1 class="page-title">PD-Becas</h1>
+			<h4 class="example-title">Enviar Solicitud.</h4>
+		</div>
+	    <div class="page-content container-fluid">
+			<div class="row">
+		        <div class="col-md-8 col-xl-8 col-sm-12 col-12">
+		          <div class="panel panel-info panel-line">
+
+		            <div class="panel-heading">
+		              <h3 class="panel-title">Enviar Solicitud</h3>
+		            </div>
+					
+					<form class="form-horizontal" id="form_solicitud">
+						<div class="row">
+							<div class="form-group col-md-6 col-xl-6 col-xs-12">
+			                    <label class="form-control-label" for="id_beca">Beca <span class="required">*</span></label>
+			                    <select class="form-control" {{pend ? '' : 'disabled'}} name="id_beca" id="id_beca" data-plugin="select2" data-placeholder="Selecciona una beca" data-allow-clear="true">
+			                       	<option></option>
+			                        {% for i,e in becas %}
+			                        <option value="{{i}}">{{e}}</option>
+			                        {% endfor %}
+			                    </select>
+			                </div>
+
+			                <div class="form-group col-md-6 col-xl-6 col-xs-12">
+			                    <label class="form-control-label" for="id_grupo">Grupo <span class="required">*</span></label>
+			                    <select class="form-control" {{pend ? '' : 'disabled'}} name="id_grupo" id="id_grupo" data-plugin="select2" data-placeholder="Selecciona un grupo" data-allow-clear="true">
+			                       	<option></option>
+			                        {% for i,e in grupos %}
+			                        <option value="{{i}}">{{e}}</option>
+			                        {% endfor %}
+			                    </select>
+			                </div>
+							<input type="hidden" name="curriculo" value="{{user.curriculo}}">
+			                <div class="form-group col-12 text-center">
+			                	<button type="button" id="solicitud_submit" {{pend ? '' : 'disabled'}} class="btn btn-primary btn-outline">Enviar Solicitud</button>
+			                </div>
+			                
+						</div>
+
+					</form>
+					{% if false == pend %}
+					<div class="col-12 bg-red">
+			            <div class="alert dark alert-alt alert-info">
+			            	<h2 class="text-white">Has enviado la solicitud de forma exitosa</h2>
+			            	<ul>
+			            		<li>Solo debes esperar a ser citado para la entrevista</li>
+			            		<li>Enviaremos un mensaje con todos los detalles de la entrevista a tu Correo Eletrónico</li>
+			            		<li>Una vez citado a la entrevista tu condición cambiará a <b>"Entrevista"</b></li>
+			            	</ul>
+			            </div>
+			              	
+			        </div>
+					{% endif %}
+		         
+		          </div>
+		        </div>
+
+		        <div class="col-md-4 col-xl-4 col-12">
+			        <div class="card text-center">
+                        <div class="col-md-12">
+		                    <div class="example">
+		                      <img class="img-rounded img-bordered img-bordered-green" width="150" height="150" src="{{user.perfil}}" alt="{{user.perfil}}">
+		                    </div>
+		                </div>
+                        <div class="card-block">
+                          <h4 class="card-title">Imagen de perfil</h4>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="col-md-12">
+		                    <div class="example">
+		                     	{% set cext = fext(user.curriculo) %}
+								{% set al = 'Currículo del solicitante' %}
+
+								{% if 'pdf' == cext %}
+									{% set ic = '<i style="font-size: 100px;" class="fa fa-file-pdf-o"></i>' %}
+								{% elseif 'docx' == cext %}
+									{% set ic = '<i style="font-size: 100px;" class="fa fa-file-word-o"></i>' %}
+								{% else %}
+								    {% set ic = '<i style="font-size: 100px;" class="fa fa-file-o"></i>' %}
+									{% set al = 'No hay currículo subido' %}
+								{% endif %}
+
+								<p class="text-center">{{ic|raw}}</p
+		                    </div>
+		                </div>
+                        <div class="card-block">
+                          <h4 class="card-title">{{al}}</h4>
+                        </div>
+                    </div>
+		        </div>
+		    </div>
+	    </div>
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/select2/select2.full.min.js"></script>
+  	<script src="public/classic/global/js/Plugin/select2.js"></script>
+	<script src="public/dev/js/perfil/solicitud.js"></script>
+</body>
+</html>
+{% endblock %}

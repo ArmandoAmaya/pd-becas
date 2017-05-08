@@ -1,0 +1,324 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/base/assets/examples/css/pages/user.css">
+{% endblock %}
+
+{% block bodyClass %}page-user{% endblock %}
+
+{% block content %}
+    {% include 'templates/nav' %}
+
+    {% include 'templates/sidebar' %}
+  
+    <div class="page">
+        <div class="page-content">
+
+            <div class="panel">
+                <div class="panel-body">
+                    {#<form class="page-search-form" role="search">
+                        <div class="input-search input-search-dark">
+                            <i class="input-search-icon wb-search" aria-hidden="true"></i>
+                            <input type="text" class="form-control" id="inputSearch" name="search" placeholder="Search Users">
+                            <button type="button" class="input-search-close icon wb-close" aria-label="Close"></button>
+                        </div>
+                    </form>#}
+                    <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
+                        {#<div class="dropdown page-user-sortlist">
+                          Order By: <a class="dropdown-toggle inline-block" data-toggle="dropdown"
+                          href="#" aria-expanded="false">Last Active</a>
+                            <div class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
+                                <a class="active dropdown-item" href="javascript:void(0)">Last Active</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Username</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Location</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Register Date</a>
+                            </div>
+                        </div>#} 
+                        <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+                            <li class="nav-item" role="presentation"><a class="active nav-link" data-toggle="tab" href="#all_contacts" aria-controls="all_contacts" role="tab">Listado</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#my_contacts" aria-controls="my_contacts" role="tab">Aprobados</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#espera" aria-controls="my_contacts" role="tab">En espera</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#google_contacts" aria-controls="google_contacts" role="tab">Rechazados</a></li>
+                          
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+                                <ul class="list-group">
+                                    {% for d in data %}                                    
+                                    <li class="list-group-item">
+                                        <div class="media">
+                                            <div class="pr-20">
+                                                <div class="avatar avatar-off">
+                                                    <img src="../{{d.perfil}}">
+                                                    <i class="avatar avatar-busy"></i>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="mt-0 mb-5">
+                                                    {{d.nombre|capitalize}} {{d.apellido|capitalize}}
+                                                    <small>{{d.tiempo_solicitud|date('d-m-Y')}} - {{d.tiempo_solicitud|date('g:i a')}}</small>
+                                                </h4>
+                                                <p>
+                                                    <i class="icon icon-color wb-map" aria-hidden="true"></i>{{d.direccion}}
+                                                </p>
+                                                <div>
+                                                    {% if  d.redes_sociales is not empty %}
+                                                        {% set social = json_to_array(d.redes_sociales) %}
+                                                    {% else %}
+                                                        {% set social = [] %}
+                                                    {% endif %}
+                                                    {% for i,e in social %}
+                                                    <a class="text-action" href="{{e}}" target="_blank" data-toggle="tooltip" data-original-title="{{i|capitalize}}">
+                                                        {{ social_icons('14')[i]|raw }}
+                                                    </a>
+                                                    {% endfor %}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="pl-20 align-self-center">
+                                                <a href="solicitantes/perfil/{{d.id}}" class="btn btn-outline btn-success btn-sm text-center" data-toggle="tooltip" data-original-title="Ver Datos"><i class="wb-order" aria-hidden="true"></i></a>
+
+                                                <a href="solicitantes/download/{{d.id}}" class="btn btn-outline btn-dark btn-sm text-center" data-toggle="tooltip" data-original-title="Currículo"><i class="fa fa-file-o" aria-hidden="true"></i></a>
+                                                
+                                                {% if d.condicion == 1 %}
+                                                <button type="button" onclick="open_entrevista('{{d.id}}')" class="btn btn-outline btn-primary btn-sm"><i class="icon wb-chat"></i>Entrevista </button>
+                                                {% elseif d.condicion == 2 %}
+                                                {% set tim = in_entr(d.id) ? '' : 'disabled' %}
+
+                                                <button {{tim}} onclick="evaluar('{{d.id}}', 5, '{{d.id_grupo}}')" type="button" class="btn btn-outline btn-success btn-sm"><i class="wb-thumb-up" data-toggle="tooltip" data-original-title="Aprobar"></i></button>
+
+                                                <button {{tim}} onclick="evaluar('{{d.id}}', 3, '{{d.id_grupo}}')" type="button" class="btn btn-outline btn-info btn-sm" data-toggle="tooltip" data-original-title="Colocar en espera"><i class="wb-alert-circle"></i></button>
+
+                                                <button {{tim}} onclick="evaluar('{{d.id}}', 4, '{{d.id_grupo}}')" type="button" class="btn btn-outline btn-danger btn-sm" data-toggle="tooltip" data-original-title="Rechazar"><i class="wb-thumb-down"></i></button>
+
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+                                        
+                                        {% if d.condicion != 2 %}
+                                        <div id="open_entrevista_{{d.id}}" style="display:none;">
+                                            <div class="row">
+                                                <div class="col-md-8 col-xl-8 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <select id="entrevista_choose_{{d.id}}" class="form-control">
+                                                            <option value=" ">Elegir entrevista</option>
+                                                            {% for ie,en in entrevistas %}
+                                                            <option value="{{ie}}">{{en}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="col-md-4 col-xl-4 col-sm-6 col-xs-12">
+                                                    <button type="button" class="btn btn-outline btn-primary btn-sm" onclick="entrevista('{{d.id}}')">Enviar Entrevista</button>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        {% endif %}
+                                        
+                                    </li>
+                                    {% endfor %}
+                                    
+                                </ul>
+                                <nav>
+                                  <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                                </nav>
+                            </div>
+                            <div class="tab-pane animation-fade" id="my_contacts" role="tabpanel">
+                                <ul class="list-group">
+                                    {% if false != aprobados %}
+                                    {% for d in aprobados %}
+                                    <li class="list-group-item">
+                                        <div class="media">
+                                            <div class="pr-20">
+                                                <div class="avatar avatar-off">
+                                                    <img src="../{{d.perfil}}">
+                                                    <i class="avatar avatar-busy"></i>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="mt-0 mb-5">
+                                                    {{d.nombre|capitalize}} {{d.apellido|capitalize}}
+                                                    <small>{{d.tiempo_solicitud|date('d-m-Y')}} - {{d.tiempo_solicitud|date('g:i a')}}</small>
+                                                </h4>
+                                                <p>
+                                                    <i class="icon icon-color wb-map" aria-hidden="true"></i>{{d.direccion}}
+                                                </p>
+                                                <div>
+                                                    {% if  d.redes_sociales is not empty %}
+                                                        {% set social = json_to_array(d.redes_sociales) %}
+                                                    {% else %}
+                                                        {% set social = [] %}
+                                                    {% endif %}
+                                                    {% for i,e in social %}
+                                                    <a class="text-action" href="{{e}}" target="_blank" data-toggle="tooltip" data-original-title="{{i|capitalize}}">
+                                                        {{ social_icons('14')[i]|raw }}
+                                                    </a>
+                                                    {% endfor %}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="pl-20 align-self-center">
+                                                <a href="solicitantes/perfil/{{d.id}}" class="btn btn-outline btn-success btn-sm text-center" data-toggle="tooltip" data-original-title="Ver Datos"><i class="wb-order" aria-hidden="true"></i></a>
+
+                                                <a href="solicitantes/download/{{d.id}}" class="btn btn-outline btn-dark btn-sm text-center" data-toggle="tooltip" data-original-title="Currículo"><i class="fa fa-file-o" aria-hidden="true"></i></a>
+                                                
+                                                
+
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                    </li> 
+                                    {% endfor %}
+                                    {% else %}
+                                    <li class="list-group-item">
+                                        <div class="alert alert-info" style="width:50%;"><strong> <i class="fa fa-info-circle" style="margin-right:20px;"></i> Información: </strong>No hay nadie en este listado.</div>
+                                    </li>
+                                        
+                                    {% endif %}                          
+                                    
+                                </ul>
+                                <nav>
+                                  <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                                </nav>
+                            </div>
+
+                            <div class="tab-pane animation-fade" id="espera" role="tabpanel">
+                                <ul class="list-group">                          
+                                    {% if false != espera %}
+                                    {% for d in espera %}
+                                    <li class="list-group-item">
+                                        <div class="media">
+                                            <div class="pr-20">
+                                                <div class="avatar avatar-off">
+                                                    <img src="../{{d.perfil}}">
+                                                    <i class="avatar avatar-busy"></i>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="mt-0 mb-5">
+                                                    {{d.nombre|capitalize}} {{d.apellido|capitalize}}
+                                                    <small>{{d.tiempo_solicitud|date('d-m-Y')}} - {{d.tiempo_solicitud|date('g:i a')}}</small>
+                                                </h4>
+                                                <p>
+                                                    <i class="icon icon-color wb-map" aria-hidden="true"></i>{{d.direccion}}
+                                                </p>
+                                                <div>
+                                                    {% if  d.redes_sociales is not empty %}
+                                                        {% set social = json_to_array(d.redes_sociales) %}
+                                                    {% else %}
+                                                        {% set social = [] %}
+                                                    {% endif %}
+                                                    {% for i,e in social %}
+                                                    <a class="text-action" href="{{e}}" target="_blank" data-toggle="tooltip" data-original-title="{{i|capitalize}}">
+                                                        {{ social_icons('14')[i]|raw }}
+                                                    </a>
+                                                    {% endfor %}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="pl-20 align-self-center">
+                                                <a href="solicitantes/perfil/{{d.id}}" class="btn btn-outline btn-success btn-sm text-center" data-toggle="tooltip" data-original-title="Ver Datos"><i class="wb-order" aria-hidden="true"></i></a>
+
+                                                <a href="solicitantes/download/{{d.id}}" class="btn btn-outline btn-dark btn-sm text-center" data-toggle="tooltip" data-original-title="Currículo"><i class="fa fa-file-o" aria-hidden="true"></i></a>
+                                                
+                                                
+
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                    </li> 
+                                    {% endfor %}
+                                    {% else %}
+                                    <li class="list-group-item">
+                                        <div class="alert alert-info" style="width:50%;"><strong> <i class="fa fa-info-circle" style="margin-right:20px;"></i> Información: </strong>No hay nadie en este listado.</div>
+                                    </li>
+                                        
+                                    {% endif %}
+                                </ul>
+                                <nav>
+                                  <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                                </nav>
+                            </div>
+                            <div class="tab-pane animation-fade" id="google_contacts" role="tabpanel">
+                                <ul class="list-group">
+                                    {% if false != rechazados %}
+                                    {% for d in rechazados %}
+                                    <li class="list-group-item">
+                                        <div class="media">
+                                            <div class="pr-20">
+                                                <div class="avatar avatar-off">
+                                                    <img src="../{{d.perfil}}">
+                                                    <i class="avatar avatar-busy"></i>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="mt-0 mb-5">
+                                                    {{d.nombre|capitalize}} {{d.apellido|capitalize}}
+                                                    <small>{{d.tiempo_solicitud|date('d-m-Y')}} - {{d.tiempo_solicitud|date('g:i a')}}</small>
+                                                </h4>
+                                                <p>
+                                                    <i class="icon icon-color wb-map" aria-hidden="true"></i>{{d.direccion}}
+                                                </p>
+                                                <div>
+                                                    {% if  d.redes_sociales is not empty %}
+                                                        {% set social = json_to_array(d.redes_sociales) %}
+                                                    {% else %}
+                                                        {% set social = [] %}
+                                                    {% endif %}
+                                                    {% for i,e in social %}
+                                                    <a class="text-action" href="{{e}}" target="_blank" data-toggle="tooltip" data-original-title="{{i|capitalize}}">
+                                                        {{ social_icons('14')[i]|raw }}
+                                                    </a>
+                                                    {% endfor %}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="pl-20 align-self-center">
+                                                <a href="solicitantes/perfil/{{d.id}}" class="btn btn-outline btn-success btn-sm text-center" data-toggle="tooltip" data-original-title="Ver Datos"><i class="wb-order" aria-hidden="true"></i></a>
+
+                                                <a href="solicitantes/download/{{d.id}}" class="btn btn-outline btn-dark btn-sm text-center" data-toggle="tooltip" data-original-title="Currículo"><i class="fa fa-file-o" aria-hidden="true"></i></a>
+                                                
+                                                
+
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                    </li> 
+                                    {% endfor %}
+                                    {% else %}
+                                    <li class="list-group-item">
+                                        <div class="alert alert-info" style="width:50%;"><strong> <i class="fa fa-info-circle" style="margin-right:20px;"></i> Información: </strong>No hay nadie en este listado.</div>
+                                    </li>
+                                        
+                                    {% endif %}
+                                </ul>
+                                <nav>
+                                  <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  
+  {% include 'templates/footer' %}
+  <script src="public/classic/global/vendor/bootbox/bootbox.js"></script>
+  <script src="public/classic/global/js/Plugin/bootbox.js"></script>
+  <script src="public/dev/js/init.js"></script>
+
+</body>
+</html>
+{% endblock %}

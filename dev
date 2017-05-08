@@ -1,0 +1,431 @@
+<?php  
+
+// -----------------------------------------
+
+define('INDEX', true);
+define('AJAX', false);
+require('app/config.php');
+
+// -----------------------------------------
+
+if (isset($argc) && $argc < 2) {
+	die("Error: La forma correcta de escribir un comando del generador es: \n php dev [modulo] [acción] [opciones]");
+}else if(isset($argc) && $argc >= 2){
+	new Dev($argv);
+}else{
+	header('location: index.php');
+	exit(1);
+}
+
+
+// -----------------------------------------
+class Dev {
+
+	// -----------------------------------------
+	private $args = array();
+
+	private $controller = null;
+	private $model = null;
+	private $view = null;
+	private $table = null;
+
+	private $mkController = false;
+	private $mkModel = false;
+	private $mkView = false;
+	private $mkAjax = false;
+	private $mkRe = false;
+	private $ajaxdir;
+
+	const GVIEW = TWIG ? 'twig/' : 'plates/';
+	const DCONTROLLERS = './app/controllers/';
+	const DMODELS = './app/models/';
+	const DVIEWS = './views/'.self::GVIEW;	
+	const EXTVIEW = ['phtml', 'twig'];
+	const COMMANDS = [
+		'-mk' => ['c','m','v', 'crud','r']
+	];
+
+	// -----------------------------------------
+
+	/**
+	 * Lee un archivo
+	 * @param string|$dir	Directorio del archivo
+	 * @return un string con todo el contenido del archivo
+	 */
+
+	private function readFile(string $dir) : string {
+		$file = new SplFileObject($dir);
+		$c = '';
+		while (!$file->eof()) {
+			$c .= $file->fgets();
+		}
+		return (string) $c;
+	}
+
+	// -----------------------------------------
+
+	/**
+	 * Escribe un archivo
+	 * @param string $file	Archivo que se va a crear
+	 * @param string $content	Contenido del archivo a crear
+	 * @return entero con la cantidad de bytes del archivo
+	 */
+
+	private function writeFile(string $file, string $content) : int {
+		$f = new SplFileObject($file, 'w');
+		return (int) $f->fwrite($content);
+	}
+
+	// -----------------------------------------
+
+	/**
+	 * Escribe dentro de un archivo que ya existe
+	 * @param string $file 	Archivo sobre el que se escribirá
+	 * @param string $content 	Contenido a escribir
+	 * @return entero con la cantidad de bytes del archivo
+	 */
+
+	private function writeIntoFile(string $file, string $content) : int {
+		$f = new SplFileObject($file, 'a+');
+		echo "Se ha modificado el archivo: $file \n";
+		return (int) $f->fwrite("\n\n". $content);
+
+	}
+
+	// -----------------------------------------
+
+	/**
+	 * Comprueba la existencia de un archivo
+	 * @param string $file 	Archivo a evaluar
+	 * @return true si el archivo ya existe, false en caso contrario
+	 */
+
+	private function fileExists(string $file) : bool{
+		if (file_exists($file)) {
+			echo $file . ' Ya existe.';
+			return true;
+		}
+		return false;
+	}
+
+	// -----------------------------------------
+
+	/**
+	 * Reemplaza las palabras entre {{}} por las claves correspondientes
+	 * @param string $content 	Contenido en el que se reemplazarán las claves
+ 	 * @param string $method 	Método del contenido
+	 * @param string $url 	Url del contenido
+	 * @return un string con el contenido reemplazado
+	 */
+
+	private function replWords(string $content, string $method, string $url) : string {
+		return str_replace('{{controller}}', $this->controller,
+				str_replace('{{model}}', $this->model,
+				str_replace('{{view}}', $this->view,
+				str_replace('{{url}}', $url,
+				str_replace('{{method}}', $method, $content)))));
+	}
+
+	// -----------------------------------------
+
+	/**
+	 * Crea un archivo 
+	 * @param int $type 	Tipo de archivo a crear [0:controlador,1:modelo,2:vista, 3,4,5: javscripts]
+	 * @param string $gen 	Archivo plantilla a tomar
+	 * @param string|string $method  métdo a aplicar [post, get]
+	 * @param string|string $url 	
+	 * @return void
+	 */
+
+	private function create_file(int $type, string $gen, string $method = '', string $url = '') {
+		$file = [
+			self::DCONTROLLERS . $this->controller .'.php',
+			self::DMODELS . $this->model . '.php',
+			self::DVIEWS . $this->view . '/' .$this->view . '.'.self::EXTVIEW[(int) TWIG],
+			'./public/dev/js/'.$this->view .'.js',
+			'./public/dev/js/'.$this->view .'/create.js',
+			'./public/dev/js/'.$this->view.'/edit.js'
+		];
+
+		if (!is_dir('./public/dev/js/'.$this->view.'/') && in_array($type, [4,5])) {
+			mkdir('./public/dev/js/'.$this->view.'/', true, 0777);
+		}
+
+		if (!is_dir(self::DVIEWS.$this->view.'/')) {
+			mkdir(self::DVIEWS.$this->view.'/', true, 0777);
+		}
+
+		$f = $file[$type];
+		if (!$this->fileExists($f)) {
+			$tam = $this->writeFile($f,$this->replWords( $this->readFile($gen), $method, $url));
+			echo "Archivo Creado: \n => $f \n => Peso: " . number_format($tam, 0, ',','.') . " Bytes.\n";
+		}
+	}
+	
+	// -----------------------------------------
+
+	/**
+	 * Escribe un metodo de ajax 
+	 * @param string $method 	Método a aplicar
+	 * @param string|string $method_name 	Nombre del método en el modelo
+	 * @return void
+	 */
+
+	private function create_ajax(string $method = '', string $method_name = 'foo', string $data = '$_POST') {
+		$model = strtolower($this->model);
+
+		$content = '/**
+ * '.$this->model.' - ¿Para que sirve?
+ * @return un objeto json
+ */
+
+$router->post(\'/'.$this->view.$method.'\',function($request, $response) {
+	$'.$model.' = new '.$this->model.';
+	$json = $response->withJson($'.$model.'->'.$method_name.'('.$data.'));
+	return $json;
+
+});';
+
+		$filename = './app/ajax/POST/post.php';
+		$this->writeIntoFile($filename, $content);
+	}
+
+	// -----------------------------------------
+	/**
+	 * Crea una estructura de crud completa
+	 * @param bool|bool $ajax - true para creara crud por ajax, false para crearlo por php 
+	 * @return void
+	 */
+	private function crud(bool $ajax = false) {
+		$this->ajaxdir = !$ajax ? 'php/' : 'ajax/';
+		$filename = self::DCONTROLLERS . $this->controller . '.php';
+		if (!$this->fileExists($filename)) {
+			$content = $this->replWords($this->readFile('./DevGenerator/crud/'.$this->ajaxdir.'/cont.g'), '', '');
+			$t = $this->writeFile($filename, str_replace('{{varname}}', strtolower($this->controller[0]), $content));
+			echo " Controlador creado: \n => $filename \n => Peso: ".number_format($t, 0,',','.') . " Bytes";
+			echo "\n ------------------------------------------------------------ \n";
+		}
+		$filename = self::DMODELS . $this->model . '.php';
+		if (!$this->fileExists($filename)) {
+			$content = $this->replWords($this->readFile('./DevGenerator/crud/'.$this->ajaxdir.'/mod.g'), '', '');
+			$t = $this->writeFile($filename, str_replace('{{table}}',$this->table, $content));
+			echo " Modelo creado: \n => $filename \n => Peso: ".number_format($t, 0,',','.') . " Bytes";
+			echo "\n ------------------------------------------------------------ \n";
+		}
+
+		$viewdir = self::DVIEWS . $this->view .'/';
+		if (!is_dir($viewdir)) {
+			mkdir($viewdir, true, 0777);
+		}
+		$filename = $viewdir . 'index.' . self::EXTVIEW[(int) TWIG];
+		if (!$this->fileExists($filename)) {
+			$t = $this->writeFile($filename,$this->replWords($this->readFile('./DevGenerator/crud/'.$this->ajaxdir.'/'.self::GVIEW .'r.g'), '', ''));
+			echo " Vistas creadas: \n Vista Principal:\t =>$filename - Peso: ".number_format($t, 0,',','.') . " Bytes \n";
+		}
+		$filename = $viewdir . 'add.' . self::EXTVIEW[(int) TWIG];
+		if (!$this->fileExists($filename)) {
+			$t = $this->writeFile($filename,$this->replWords($this->readFile('./DevGenerator/crud/'.$this->ajaxdir.'/'.self::GVIEW .'a.g'), 'POST', ''));
+			echo " Vista de creación:\t => $filename - Peso: ".number_format($t, 0,',','.') . " Bytes \n";
+		}
+		$filename = $viewdir . 'edit.' . self::EXTVIEW[(int) TWIG];
+		if (!$this->fileExists($filename)) {
+			$t = $this->writeFile($filename,$this->replWords($this->readFile('./DevGenerator/crud/'.$this->ajaxdir.'/'.self::GVIEW .'e.g'), 'POST', ''));
+			echo " Vista de edición:\t => $filename - Peso: ".number_format($t, 0,',','.') . " Bytes \n";
+			echo "\n ------------------------------------------------------------ \n";
+		}
+
+		if ($ajax) {
+			$this->create_file(4, './DevGenerator/js.g', 'POST', $this->view .'/add');
+			$this->create_file(5, './DevGenerator/js.g', 'POST', $this->view .'/edit');
+
+			echo "\n ------------------------------------------------------------ \n";
+
+			$this->create_ajax('/add', 'Add');
+			$this->create_ajax('/edit', 'Edit');
+			$this->create_ajax('/delete', 'Delete', '$_POST[\'id\']');
+
+
+		}
+
+	}
+
+	// -----------------------------------------
+
+	/**
+	 * Despliega la ayuda
+	 * @return void
+	 */
+
+	private function help() {
+		echo "\n ---------------------------------------------------------------------------------- \n";
+		echo " COMANDOS -mk: \n";
+		echo " php dev -mk:c [nombre] \t=> Crea un controlador. \n";
+		echo " php dev -mk:m [nombre] \t=> Crea un modelo. \n";
+		echo " php dev -mk:v [nombre] \t=> Crea una vista. \n";
+		echo " php dev -mk:r [nombre] \t=> Crea una vista,modelo,js para petición ajax.\n\n";
+
+		echo " php dev -mk:c [nombre] -c\t=> Crea un controlador con una estructura de crud. \n";
+		echo " php dev -mk:m [nombre] -c\t=> Crea un modelo con una estructura de crud. \n\n";
+
+		echo " php dev -mk:crud [nombre] -p\t=> Crea un crud completo (modelo, vista,controlador,javascript) con petición php. \n";
+		echo " php dev -mk:crud [nombre] -a\t=> Crea un crud completo (modelo, vista,controlador,javascript) con petición ajax. \n";
+
+		echo "\n ---------------------------------------------------------------------------------- \n";
+
+		echo " * Podemos especificar otro atributo dentro de los comandos -mk:m,r,m -c,crud -p, crud -a, llamado [table] para apuntar hacia una tabla en la base de datos.\n";
+		echo " * Ejemplo: php dev -mk:crud test -a [test] => apuntaria hacia una tabla llamada test, si no se especifica la tabla tendrá el mismo nombre que el modelo.";
+
+	}
+
+	// -----------------------------------------
+
+	/**
+	 * Checkea todos los posibles errores que pueden ocurrir
+	 * @return void
+	 */
+
+	private function check() {
+		try {
+			$c = explode(':', $this->args[1]);
+
+			if (!array_key_exists(2, $this->args)) {
+				throw new Exception(" ERROR: Debe existir un nombre para el módulo.");
+			}
+			if (!ctype_alnum(str_replace(':', '', trim($c[0], '-')))) {
+				throw new Exception(" ERROR: El comando debe ser alfanumérico.");
+			}
+
+			$this->controller = ucfirst(strtolower($this->args[2])) . 'Controller';
+			$this->model = ucfirst(strtolower($this->args[2]));
+			$this->view = strtolower($this->args[2]);
+			
+			if (in_array($this->args[1], ['-mk:m', '-mk:r']) && array_key_exists(3, $this->args) && ($this->args[3][0] == '[' && $this->args[3][strlen($this->args[3]) - 1] == ']')) {
+				
+				$this->table = str_replace('[', '', str_replace(']', '', $this->args[3]));
+
+			}else if(in_array($this->args[1], ['-mk:m', '-mk:r']) && array_key_exists(4, $this->args) && ($this->args[4][0] == '[' && $this->args[4][strlen($this->args[4]) - 1] == ']') && in_array($this->args[3], ['-p','-c', '-a'])){
+
+				$this->table = str_replace('[', '', str_replace(']', '', $this->args[4]));
+
+			}else if ($this->args[1] == '-mk:crud'  && array_key_exists(4, $this->args) && ($this->args[4][0] == '[' && $this->args[4][strlen($this->args[4]) - 1] == ']')) {
+
+				$this->table = str_replace('[', '', str_replace(']', '', $this->args[4]));
+				
+			}else{
+				$this->table = strtolower($this->model);
+			}
+		
+		} catch (Exception $e) {
+			die($e->getMessage());
+		}
+		
+	}
+	// -----------------------------------------
+
+	/**
+	 * Crea un modulo especificado
+	 * @return void
+	 */
+
+	private function create_module() {
+		if ($this->mkController && !$this->mkRe) {
+			$this->create_file(0, './DevGenerator/cont.g');
+		}else if ($this->mkController && $this->mkRe) {
+			$this->create_file(0, './DevGenerator/crud/cont.g');
+		}
+
+		if ($this->mkModel && !$this->mkAjax && !$this->mkRe) {
+			$this->create_file(1, './DevGenerator/mod.g', 'foo');
+		}else if($this->mkModel && $this->mkAjax && !$this->mkRe){
+			$this->create_file(1, './DevGenerator/mod.g', 'foo', '');
+			$this->create_ajax();
+		}else if ($this->mkModel && $this->mkRe) {
+			$this->create_file(1, './DevGenerator/crud/mod.g', 'foo', '');
+		}
+
+		if ($this->mkView && !$this->mkAjax) {
+			$this->create_file(2, './DevGenerator/'.self::GVIEW.'/vie.g');
+		}else if ($this->mkModel && $this->mkView && $this->mkAjax){
+			$this->create_file(2, './DevGenerator/'.self::GVIEW.'/viea.g');
+			$this->create_file(3, './DevGenerator/js.g', 'POST', $this->view);
+		}
+	}
+	// -----------------------------------------
+	/**
+	 * Ejecuta los comandos
+	 * @return void
+	 */
+	private function exec() {
+		try {
+			$vc = array_keys(self::COMMANDS);
+			$c = explode(':', $this->args[1]);
+			$vc[] = '-h';			
+			if (!in_array($c[0], $vc)) {
+				throw new Exception(" ERROR: Comando no reconocido. \n Revisar lista de comandos con: php dev -h");
+			}
+			if ($this->args[1] == '-h') {
+				$this->help();
+			}else if (!in_array($c[1], self::COMMANDS[$c[0]])) {
+				throw new Exception(" ERROR: El comando '$c[1]' no pertenece al comando '$c[0]'. \n Revisar lista de comandos con: php dev -h.");
+			}else if ($c[0] == '-mk') {
+
+				$this->check();
+				$exist = array_key_exists(3, $this->args);
+				$exec = false;
+
+				if ($c[1] == 'c') {
+					$exec = true;
+					if ($exist && $this->args[3] == '-r') {
+						$this->mkRe = true;
+					}else if ($exist && $this->args[3] != '-r') {
+						$exec = false;
+					}
+					$this->mkController = true;
+				}else if($c[1] == 'v') {
+					$exec = true;
+					$this->mkView = true;
+				}else if($c[1] == 'm'){
+					$exec = true;
+					$this->mkModel = true;
+					if ($exist && $this->args[3] == '-r') {
+						$this->mkRe = true;
+					}else if ($exist && $this->args[3] != '-r') {
+						$exec = false;
+					}
+				}else if($c[1] == 'crud' && $exist && $this->args[3] == '-p'){
+					$exec = true;
+					$this->crud();
+				}else if($c[1] == 'crud' && $exist && $this->args[3] == '-a'){
+					$exec = true;
+					$this->crud($exec);
+				}
+
+				if (!$exec) {
+					throw new Exception(" Error en la sintaxis del comando. \n Revisar lista de comandos con: php dev -h");
+				}else{
+					$this->create_module();
+				}
+			}
+			
+
+
+		} catch (Exception $e) {
+			die($e->getMessage());
+		}
+	
+	}
+
+	// -----------------------------------------
+
+	public function __construct(array $args){
+		$this->args = $args;
+		$this->exec();
+
+	}
+
+
+}
+
+
+
+?>

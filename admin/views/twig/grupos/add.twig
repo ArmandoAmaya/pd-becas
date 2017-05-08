@@ -1,0 +1,116 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/clockpicker/clockpicker.css">
+<link rel="stylesheet" href="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.css">
+<link rel="stylesheet" href="public/classic/global/vendor/multi-select/multi-select.css">
+{% endblock %}
+
+{% block title %}Grupos{% endblock %}
+
+{% block content %}
+  {% include 'templates/nav' %}
+ 
+  {% include 'templates/sidebar' %}
+
+    <div class="page">
+        <div class="page-header">
+            <h1 class="page-title">Gestión de grupos</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="grupos/">grupos</a></li>
+                <li class="breadcrumb-item active">Crear</li>
+            </ol>
+        </div>
+        <div class="panel">
+        <div class="panel-body container-fluid">
+          <div class="row row-lg">
+            <div class="col-md-12 col-lg-12">
+
+                <div class="example-wrap">
+                    <h4 class="example-title">grupos - Creación</h4>
+                    <div class="example">
+                        <form id="grupos_form" autocomplete="off">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="name">Nombre del grupo <span class="required">*</span></label>
+                                      <input type="text" id="name" class="form-control" name="name" placeholder="Ejemplo: Grupo #1" autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="cupos">Cupos del grupo <span class="required">*</span></label>
+                                      <input type="tel" id="cupos" class="form-control numeric" name="cupos" placeholder="Ejemplo: 20" autocomplete="off">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-xs-12 col-md-3">
+                                  
+                                  <div class="form-group">
+                                      <label class="form-control-label" for="hora_inicio" >Hora de entrada <span class="required">*</span></label>
+                                      <div class="input-group">
+                                        <span class="input-group-addon">
+                                          <span class="wb-time"></span>
+                                        </span>
+                                        <input type="text" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" placeholder="Hora de inicio" id="hora_inicio" name="hora_inicio">
+                                      </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-3">
+                                  <div class="form-group">
+                                      <label class="form-control-label" for="hora_salida">Hora de salida <span class="required">*</span></label>
+                                      <div class="input-group">
+                                        <span class="input-group-addon">
+                                          <span class="wb-time"></span>
+                                        </span>
+                                        <input type="text" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" placeholder="Hora de salida" id="hora_salida" name="hora_salida">
+                                      </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                  <div class="form-group">
+                                      <label class="form-control-label" for="dias-Id">Dias de cumplimiento<span class="required">*</span></label>
+                                      <select id='dias' name="dias[]" multiple='multiple' data-plugin="multiSelect">
+                                        {% for dia in dias() %}
+                                        <option value='{{ dia }}'>{{ dia }}</option>
+                                        {% endfor %}
+                                      </select>
+                                  </div>
+                                </div>
+
+                                
+                                <div class="col-md-6 col-xs-12">
+                                  <div class="form-group">
+                                    <input type="checkbox" class="to-labelauty" name="formato" data-plugin="labelauty" data-labelauty="Convertir en formato de 12 horas" value="1" />
+                                  </div>
+                                </div>
+                                                                
+
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="grupos_submit" class="btn btn-primary">Crear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  {% include 'templates/footer' %}
+  <script src="public/classic/global/vendor/clockpicker/bootstrap-clockpicker.min.js"></script>
+  <script src="public/classic/global/js/Plugin/clockpicker.js"></script>
+  <script src="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.js"></script>
+  <script src="public/classic/global/js/Plugin/jquery-labelauty.js"></script>
+  <script src="public/classic/global/vendor/multi-select/jquery.multi-select.js"></script>
+  <script src="public/classic/global/js/Plugin/multi-select.js"></script>
+  <script src="public/dev/js/grupos/create.js"></script>
+</body>
+</html>
+{% endblock %}

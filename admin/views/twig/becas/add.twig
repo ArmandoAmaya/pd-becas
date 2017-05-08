@@ -1,0 +1,93 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/summernote/summernote.css">
+<link rel="stylesheet" href="public/classic/global/vendor/dropify/dropify.css">
+{% endblock %}
+
+{% block content %}
+  {% include 'templates/nav' %}
+ 
+  {% include 'templates/sidebar' %}
+
+    <div class="page">
+        <div class="page-header">
+            <h1 class="page-title">Gestión de becas</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="becas/">becas</a></li>
+                <li class="breadcrumb-item active">Crear</li>
+            </ol>
+        </div>
+        <div class="panel">
+        <div class="panel-body container-fluid">
+          <div class="row row-lg">
+            <div class="col-md-12 col-lg-12">
+
+                <div class="example-wrap">
+                    <h4 class="example-title">becas - Creación</h4>
+                    <div class="example">
+                        <form id="becas_form" autocomplete="off" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                  
+                                  <div class="form-group">
+                                    <label class="form-control-label" for="name">Nombre de la beca <span class="required">*</span></label>
+                                    <input type="text" id="name" class="form-control" name="name" placeholder="Coloca un nombre para esta beca" autocomplete="off">
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label class="form-control-label" for="tipo">Tipo de beca <span class="required">*</span></label>
+                                    <input type="text" id="tipo" class="form-control" name="tipo" placeholder="Ejemplo: Beca estudiantil" autocomplete="off">
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label class="form-control-label" for="sede">Sede <span class="required">*</span></label>
+                                    <input type="text" id="sede" class="form-control" name="sede" placeholder="Lugar de cumplimiento" autocomplete="off">
+                                  </div>
+  
+                                  <div class="form-group">
+                                    <label class="form-control-label" for="sede">Descripción <span class="required">*</span></label>
+                                    <div id="summernote" data-plugin="summernote"></div>
+                                    <input type="hidden" name="desc" id="desc">
+                                  </div>
+                                    
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                  <div class="example-wrap">
+                                      <h4 class="example-title">Imágen de Perfil <span class="required">*</span></h4>
+                                      <div class="example">
+                                        <input type="file" name="perfil" id="input-file-now-custom-1" data-height="200" data-plugin="dropify" accept="image/*" />
+                                     </div>
+                                  </div>
+
+                                  
+                                </div>
+                
+
+                            </div>
+
+                            
+                            <div class="form-group text-right">
+                              <button type="button" id="becas_submit" class="btn btn-primary">Crear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  {% include 'templates/footer' %}
+  <script src="public/classic/global/vendor/summernote/summernote.min.js"></script>
+  <script src="public/classic/global/js/Plugin/summernote.js"></script>
+  <script src="public/classic/global/vendor/dropify/dropify.js"></script>
+  <script src="public/classic/global/js/Plugin/dropify.js"></script>
+  <script src="public/dev/js/init.js"></script>
+  <script src="public/dev/js/becas/create.js"></script>
+</body>
+</html>
+{% endblock %}

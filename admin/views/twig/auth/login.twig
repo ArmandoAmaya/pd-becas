@@ -1,0 +1,60 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/base/assets/examples/css/pages/login-v3.css">
+{% endblock %}
+
+{% block bodyClass %}page-login-v3 layout-full{% endblock %}
+
+{% block content %}
+<div class="page vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">>
+    <div class="page-content vertical-align-middle animation-slide-top animation-duration-1">
+        <div class="panel">
+            <div class="panel-body">
+              <div class="brand">
+                <img class="brand-img" src="public/classic/base/assets/images/logo-blue.png" alt="...">
+                <h2 class="brand-text font-size-18">PDVSA Admin</h2>
+              </div>
+              <form id="login_form">
+                <div class="form-group form-material floating" data-plugin="formMaterial">
+                    <input type="email" class="form-control" name="email" />
+                    <label class="floating-label">Correo electrónico</label>
+                </div>
+                <div class="form-group form-material floating" data-plugin="formMaterial">
+                    <input type="password" class="form-control" name="pass" />
+                    <label class="floating-label">Contraseña</label>
+                </div>
+                <div class="form-group clearfix">
+                    <div class="checkbox-custom checkbox-inline checkbox-primary checkbox-lg float-left">
+                        <input type="checkbox" id="inputCheckbox" name="remember">
+                        <label for="inputCheckbox">Recordar</label>
+                    </div>
+
+                </div>
+                <button id="login_submit" type="button" class="btn btn-primary btn-block btn-lg mt-40">Ingresar</button>
+              </form>
+            </div>
+        </div>
+        <footer class="page-copyright page-copyright-inverse">
+            <p>PDVSA Panel Adminsitrativo</p>
+            <p>© {{"now"|date('Y')}}. Todos los derechos reservados.</p>
+            <div class="social">
+              <a class="btn btn-icon btn-pure" href="javascript:void(0)">
+                <i class="icon bd-twitter" aria-hidden="true"></i>
+              </a>
+              <a class="btn btn-icon btn-pure" href="javascript:void(0)">
+                <i class="icon bd-facebook" aria-hidden="true"></i>
+              </a>
+              <a class="btn btn-icon btn-pure" href="javascript:void(0)">
+                <i class="icon bd-google-plus" aria-hidden="true"></i>
+              </a>
+            </div>
+        </footer>
+    </div>
+</div>
+{% include 'templates/footer' %}
+<script src="public/classic/global/js/Plugin/material.js"></script>
+<script src="public/dev/js/login.js"></script>
+</body>
+</html>
+{% endblock %}

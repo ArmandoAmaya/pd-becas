@@ -1,0 +1,268 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+
+<link rel="stylesheet" href="public/classic/global/vendor/dropify/dropify.css">
+<link rel="stylesheet" href="public/classic/global/vendor/select2/select2.css">
+<link rel="stylesheet" href="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.css">
+{% endblock %}
+
+
+{% block BodyClass %}page-profile-v2{% endblock %}
+
+{% block content %}
+
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+		<div class="page-header page-header-bordered text-center mb-10">
+			<h1 class="page-title">PD-Becas</h1>
+			<h4 class="example-title">Editar perfil.</h4>
+		</div>
+	    <div class="page-content container-fluid">
+			<div class="row">
+		        <div class="col-md-8 col-xl-8 col-sm-12 col-xs-12">
+		          <div class="panel panel-primary panel-line">
+
+		            <div class="panel-heading">
+		              <h3 class="panel-title">Edición de solicitante</h3>
+		            </div>
+
+		            <div class="panel-body container-fluid">
+		              <div class="row row-lg">
+		                <div class="col-md-12 col-xl-12">
+		                    <div class="example-wrap">
+		                        <div class="example">
+		                            <form id="solicitantes_form" autocomplete="off">
+
+		                                <div class="nav-tabs-horizontal" data-plugin="tabs">
+		                                  <ul class="nav nav-tabs" role="tablist">
+		                                    <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
+		                                      aria-controls="exampleTabsOne" role="tab">Datos de usuario</a></li>
+		                                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
+		                                      aria-controls="exampleTabsTwo" role="tab">Otros Datos</a></li>                              
+		                                  </ul>
+
+		                                  <div class="tab-content pt-20">
+		                                    <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+		                                      <div class="row">
+		                                        <div class="form-group col-md-6 col-xl-6 col-sm-6 col-xs-12">
+		                                          	<label class="form-control-label" for="email">Correo Electrónico <span class="required">*</span></label>
+		                                          	<input type="email" class="form-control" id="email" name="email" placeholder="Coloca tu email" required="required" value="{{user.correo}}">
+		                                        </div>
+
+		                                        <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                          <label class="form-control-label" for="nombre">Nombre <span class="required">*</span></label>
+		                                          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Coloca tu nombre" value="{{user.nombre}}">
+		                                        </div>
+
+		                                        <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                          <label class="form-control-label" for="apellido">Apellido <span class="required">*</span></label>
+		                                          <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Coloca tu apellido" value="{{user.apellido}}">
+		                                        </div>
+
+		                                        <div class="form-group col-md-6 col-xl-6 col-sm-6 col-xs-12">
+		                                          <label class="form-control-label" for="ced">Cédula de identidad <span class="required">*</span></label>
+		                                          <input type="tel" class="form-control numeric" id="ced" name="ced" required="required" placeholder="Coloca tu cédula de identidad" value="{{user.cedula}}">
+		                                        </div>
+		                                        
+		                                        <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                          <label class="col-xl-12 col-md-3 form-control-label">Género
+		                                            <span class="required">*</span>
+		                                          </label>
+		                                          <div class="col-xl-12 col-md-6">
+		                                            <div class="input-group">
+		                                              <div>
+		                                                <div class="radio-custom radio-primary">
+		                                                  <input type="radio" id="masculino" name="genero" value="masculino" required=""  {{'masculino' == user.genero ? 'checked' : ''}}>
+		                                                  <label for="masculino">Masculino</label>
+		                                                </div>
+		                                              </div>
+		                                              <div>
+		                                                <div class="radio-custom radio-primary">
+		                                                  <input type="radio" id="femenino" name="genero" value="femenino" {{'femenino' == user.genero ? 'checked' : ''}}>
+		                                                  <label for="femenino">Femenino</label>
+		                                                </div>
+		                                              </div>
+		                                              
+		                                            </div>
+		                                          </div>
+		                                        </div>
+
+		                                        <div class="form-group col-md-6 col-xl-6 col-sm-6 col-xs-12">
+		                                          <label class="form-control-label" for="pass">Cambiar Contraseña </label>
+		                                          <input type="password" class="form-control" id="pass" name="pass" required="required" placeholder="Contraseña nueva">
+		                                          <button type="button" id="generate" class="btn btn-primary">Generar</button>
+		                                          <span id="generada"></span>
+		                                        </div>
+
+		                                        <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                          <label class="form-control-label" for="tel1">Teléfono 1 <span class="required">*</span></label>
+		                                          <input type="tel" class="form-control numeric" id="tel1" name="tel1" placeholder="Ej: 04245559589" value="{{user.telefono1}}">
+		                                        </div>
+
+		                                        <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                          <label class="form-control-label" for="tel2">Teléfono 2 </label>
+		                                          <input type="tel" class="form-control numeric" id="tel2" name="tel2" placeholder="Ej: 02615554748" value="{{user.telefono2}}">
+		                                        </div>
+		                                        
+		                                        <div class="form-group col-md-8 col-xl-8 col-xs-12">
+		                                          <label class="form-control-label" for="dir">Dirección <span class="required">*</span></label>
+		                                          <textarea name="dir" id="dir" class="form-control" rows="2" placeholder="Dirección del lugar donde vive el solicitante">{{user.direccion}}</textarea>
+		                                        </div>
+
+		                                        <div class="form-group col-md-4 col-xl-4 col-xs-12">
+		                                          <label class="form-control-label" for="fecha">Fecha de nacimiento <span class="required">*</span></label>
+		                                          <input type="text" class="form-control" id="fecha" name="fecha" placeholder="YYYY-MM-DD" value="{{user.fecha_nacimiento|date('Y-m-d') }}" />
+		                                          <p class="text-help">Ejemplo: {{"now"|date('Y-m-d')}}</p>
+		                                        </div>
+
+
+		                                      </div>
+		                                    </div>
+		                                    <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+
+		                                      <div class="row">
+
+		                                          <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                            <label class="form-control-label" for="tel2">Estado <span class="required">*</span></label>
+		                                            <select class="form-control" name="estado" id="estado" data-plugin="select2" data-placeholder="Selecciona un Estado" data-allow-clear="true">
+		                                              <option></option>
+		                                              {% for i,e in estados %}
+		                                              <option {{i == user.id_estado ? 'selected' : ''}} value="{{i}}">{{e}}</option>
+		                                              {% endfor %}
+		                                            </select>
+		                                          </div>
+
+		                                          <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                            <label class="form-control-label" for="tel2">Municipio<span class="required">*</span></label>
+
+		                                            <span id="mun_selected" data-mun-selected="{{user.id_municipio}}"></span>
+
+		                                            <select class="form-control" name="municipio" id="municipio" disabled data-plugin="select2" data-placeholder="Selecciona un Municipio" data-allow-clear="true">
+		                                              <option></option>
+		                                            </select>
+		                                          </div>
+
+
+
+		                                          <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                            <label class="form-control-label" for="tel2">Parroquia <span class="required">*</span></label>
+
+		                                            <span id="parr_selected" data-parr-selected="{{user.id_parroquia}}"></span>
+
+		                                            <select class="form-control" name="parroquia" id="parroquia" disabled data-plugin="select2" data-placeholder="Selecciona una parroquia" data-allow-clear="true">
+		                                              <option></option>
+		                                            </select>
+		                                          </div>
+
+		                                          
+
+		                                          <div class="form-group col-md-6 col-xl-6 col-xs-12">
+		                                            <label class="form-control-label" for="tel2">Nacionalidad <span class="required">*</span></label>
+		                                            
+		                                            <ul class="list-unstyled list-inline">
+		                                              <li class="list-inline-item">
+		                                                <input type="radio" class="to-labelauty" name="nacionalidad" data-plugin="labelauty" data-labelauty="Venezolano" value="V" {{user.nacionalidad == 'V' ? 'checked' : ''}} />
+		                                              </li>
+		                                              <li class="list-inline-item">
+		                                                <input type="radio" class="to-labelauty" name="nacionalidad" data-plugin="labelauty" data-labelauty="Extranjero" value="E" {{user.nacionalidad == 'E' ? 'checked' : ''}} />
+		                                              </li>
+		                                            </ul>
+		                                          </div>
+
+		                                          <div class="form-group col-md-12 col-xl-12 col-xs-12">
+		                                            <label class="form-control-label" for="tel2">Condición</label>
+		                                            <span>{{get_cond()[user.condicion]|raw }}</span>
+		                                          </div>
+		                                          
+		                                          {% if  user.redes_sociales is not empty %}
+		                                            {% set social = json_to_array(user.redes_sociales) %}
+		                                          {% else %}
+		                                            {% set social = [] %}
+		                                          {% endif %}
+		                                          {% for i,e in social_icons('17') %}
+		                                          <div class="col-md-6 col-xl-6 col-xs-12 col-sm-12">
+		                                            <div class="form-group row">
+		                                              <div class="col-md-2 col-xl-1 col-sm-1 col-xs-1" style="padding: 0;">
+		                                                <input type="checkbox" {{ (i in social|keys) ? 'checked' : '' }} class="to-labelauty-icon social_label" name="{{i}}" data-plugin="labelauty" data-label="false" value="{{i}}" />
+		                                              </div>
+		                                              <div class="col-md-2 col-xl-1 hidden-sm hidden-xs" style="padding:0;">
+		                                                {{e|raw}}
+		                                              </div>
+		                                              <div class="col-md-8 col-xl-10 col-sm-11 col-xs-11" style="padding-left:0;">
+		                                                <input type="text" class="form-control" name="{{i}}_link" id="{{i}}_link" placeholder="{{i|capitalize}}" value="{{social[i]}}">
+		                                              </div>
+		                                            </div>
+		                                          </div>  
+		                                          {% endfor %}
+
+		                                      </div>
+		                                    </div>
+		                                    
+		                                  </div>
+		                                </div>
+		                                <div class="form-group">
+		                                    <button type="button" id="solicitantes_submit" class="btn btn-primary">Editar</button>
+		                                </div>
+		                            </form>
+		                        </div>
+		                    </div>
+
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+
+		        <div class="col-md-4 col-xl-4 col-xs-12">
+			        <div class="panel panel-success panel-line">
+			            <div class="panel-heading p-5">
+			              	<h3 class="panel-title">Imagen del usuario</h3>
+
+			            </div>
+			            <div class="panel-body">
+			              <div class="example-wrap">
+			                  <div class="example">
+			                    <input type="file" name="perfil" id="perfil" data-height="130" data-plugin="dropify" data-default-file="{{ user.perfil }}" accept="image/*" />
+			                 </div>
+			              </div>
+			            </div>
+			        </div>
+
+			        <div class="panel panel-info panel-line">
+			            <div class="panel-heading p-5">
+			              	<h3 class="panel-title">Currículo</h3>
+			            </div>
+			            <div class="panel-body">
+			              <div class="example-wrap">
+			                  <div class="example">
+			                    <input type="file" name="curriculo" id="curriculo" data-height="130" data-plugin="dropify" data-default-file="{{user.curriculo}}" />
+			                 </div>
+			              </div>
+			            </div>
+			        </div>
+
+		        </div>
+		    </div>
+	    </div>
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/slick-carousel/slick.js"></script>
+	<script src="public/classic/topbar/assets/examples/js/pages/profile-v2.js"></script>
+	<script src="public/classic/global/vendor/dropify/dropify.js"></script>
+	<script src="public/classic/global/vendor/dropify/dropify.js"></script>
+  	<script src="public/classic/global/js/Plugin/dropify.js"></script>
+
+  	<script src="public/classic/global/vendor/select2/select2.full.min.js"></script>
+  	<script src="public/classic/global/js/Plugin/select2.js"></script>
+  	<script src="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.js"></script>
+  	<script src="public/classic/global/js/Plugin/jquery-labelauty.js"></script>
+
+  	<script src="public/dev/js/perfil/edit.js"></script>
+</body>
+</html>
+{% endblock %}

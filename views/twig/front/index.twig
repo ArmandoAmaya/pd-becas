@@ -1,0 +1,215 @@
+{% extends 'templates/header' %}
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="public/classic/global/vendor/slick-carousel/slick.css">
+<link rel="stylesheet" href="public/classic/topbar/assets/examples/css/uikit/carousel.css">
+<link rel="stylesheet" href="public/classic/topbar/assets/examples/css/forms/layouts.css">
+{% endblock %}
+{% block content %}
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+		<div class="page-header page-header-bordered text-center">
+			<h1 class="page-title">PD-Becas</h1>
+			<h4 class="example-title">Opta por una beca de forma fácil y gratuita.</h4>
+		</div>
+	    <div class="{# page-content #}">
+	      	<div class="carousel slide" id="exampleCarouselCaptions" data-ride="carousel">
+                <ol class="carousel-indicators carousel-indicators-fillin">
+                    <li class="active" data-slide-to="0" data-target="#exampleCarouselCaptions"></li>
+                    <li data-slide-to="1" data-target="#exampleCarouselCaptions"></li>
+                    <li data-slide-to="2" data-target="#exampleCarouselCaptions"></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <div class="carousel-item active">
+                        <img class="w-full" src="public/classic/global/photos/placeholder.png" alt="..." />
+                        <div class="carousel-caption">
+                          <h3>First Slide Label</h3>
+                          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img class="w-full" src="public/classic/global/photos/placeholder.png" alt="..." />
+                        <div class="carousel-caption">
+                          	<h3>Second Slide Label</h3>
+                          	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img class="w-full" src="public/classic/global/photos/placeholder.png" alt="..." />
+                        <div class="carousel-caption">
+                          	<h3>Third Slide Label</h3>
+                          	<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur. </p>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#exampleCarouselCaptions" role="button" data-slide="prev">
+                  	<span class="carousel-control-prev-icon wb-chevron-left" aria-hidden="true"></span>
+                  	<span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#exampleCarouselCaptions" role="button" data-slide="next">
+                  	<span class="carousel-control-next-icon wb-chevron-right" aria-hidden="true"></span>
+                  	<span class="sr-only">Next</span>
+                </a>
+            </div>
+			
+			<section class="row mr">
+				<div class="col-xl-3 col-md-6 col-sm-6 col-xs-12">
+					<div class="card mc">
+			            <div class="card-block text-center">
+			                <h4 class="card-title">Becas</h4>
+			                <i class="wb-globe"></i>
+			                <p class="card-text hidden-md-down"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+			                  nisi ut aliquip ex ea commodo consequat lorem. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+			            </div>
+			        </div>
+				</div>
+				
+				<div class="col-xl-3 col-md-6 col-sm-6 col-xs-12">
+					<div class="card mc">
+			            <div class="card-block text-center bg-red-800 text-white">
+			                <h4 class="card-title text-white">Solicitantes</h4>
+			                <i class="wb-user-circle"></i>
+			                <p class="card-text hidden-md-down"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+			                  nisi ut aliquip ex ea commodo consequat lorem. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+			            </div>
+			        </div>
+				</div>	
+
+				<div class="col-xl-3 col-md-6 col-sm-6 col-xs-12">
+					<div class="card mc">
+			            <div class="card-block text-center">
+			                <h4 class="card-title">Grupos</h4>
+			                <i class="wb-users"></i>
+			                <p class="card-text hidden-md-down"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+			                  nisi ut aliquip ex ea commodo consequat lorem. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+			            </div>
+			        </div>
+				</div>
+
+				<div class="col-xl-3 col-md-6 col-sm-6 col-xs-12">
+					<div class="card mc bg-red-800 text-white">
+			            <div class="card-block text-center">
+			                <h4 class="card-title text-white">Acerca </h4>
+			                <i class="wb-help-circle"></i>
+			                <p class="card-text hidden-md-down"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+			                  nisi ut aliquip ex ea commodo consequat lorem. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+			            </div>
+			        </div>
+				</div>	        
+
+		        
+			</section>
+
+			<section class="row mr section-2">
+				<div class="col-md-6 col-sm-6 col-xs-12 card  mb-0">
+					<div class="card-block text-white text-center">
+						<h2 class="text-white mb-50">Acerca de nosotros</h2>
+						<p class="font-size-15 mb-50">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+						
+						<a href="#" class="btn btn-info"> <i class="wb-help-circle"></i> Acerca</a>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-12 card  bg-red-800 text-white mb-0">
+					<div class="card-block text-center">
+						<h2 class="text-white mb-50 font-weight-800">¿Aún no tienes cuenta?</h2>
+						<p class="font-size-18 font-weight-400">¡No esperes más!</p>
+						<p class="mb-50 font-size-18 font-weight-400">Registrarte y censate en una beca para poder disfrutar los beneficios de la misma.</p>
+						<a href="#" class="btn btn-danger"> <i class="wb-user"></i> Crear Cuenta</a>
+
+						<p class="font-size-18 font-weight-400 mt-50">¿Todavía no sabes que beca escoger? puedes ver la información de las becas publicas <a href="#" class="white-text">Aquí</a></p>
+					</div>
+				</div>
+			</section>
+
+            <section class="row section-3">
+            	<div class="text-center col-12 mt-50 mb-50">
+            		<h2 class="example-title">Contacto</h2>
+            		<h3 class="example-title">Contactanos facilmente por nuestros distintos medios</h3>
+            	</div>
+				
+
+				<div class="col-md-6 col-12 col-xl-6 col-sm-12 py-50 bg-white">
+					<h4 class="example-title text-center font-size-18">Puedes contactarnos</h4>
+					<form autocomplete="off">
+	                    <div class="row">
+	                      <div class="form-group col-md-6">
+	                        	<label class="form-control-label" for="inputBasicFirstName">Nombre</label>
+	                        	<input type="text" class="form-control" id="inputBasicFirstName" name="name" placeholder="Coloca tu nombre" autocomplete="off" />
+	                      </div>
+	                      <div class="form-group col-md-6">
+	                        	<label class="form-control-label" for="inputBasicLastName">Apellido</label>
+	                        	<input type="text" class="form-control" id="inputBasicLastName" name="apellido" placeholder="Coloca tu apellido" autocomplete="off" />
+	                      </div>
+	                    </div>
+                    
+	                    <div class="form-group col-md-12">
+	                      	<label class="form-control-label" for="inputBasicEmail">Correo Eletrónico</label>
+	                      	<input type="email" class="form-control" id="inputBasicEmail" name="email" placeholder="Coloca tu correo eletrónico" autocomplete="off" />
+	                    </div>
+                   		
+                   		<div class="form-group col-md-12">
+                   			<label class="form-control-label" for="msg">Mensaje</label>
+                   			<textarea class="form-control" id="msg" name="msg" placeholder="Escribe tu mensaje..."></textarea>
+                   		</div>
+                    
+	                    <div class="form-group col-md-12">
+	                      	<button type="button" class="btn btn-primary btn-outline">Enviar</button>
+	                    </div>
+                  </form>
+				</div>
+
+				<div class="col-md-6 col-12 col-xl-6 col-sm-12 info-contact p-0 text-white">
+					<div class="bg_imag py-50">
+						<h4 class="example-title text-center mb-50 text-white font-weight-800 font-size-18 mt-0">Información de contacto</h4>
+						<p class="pl-50">Correo Electrócnico: <b>info@pdvsa.com</b></p>
+						<p class="pl-50">Teléfono: <b>+58(212)7084021 </b></p>
+						<p class="pl-50">FAX: <b>+58(212)7084460  </b></p>
+						<address class="pl-50">Dirección: Petróleos de Venezuela, S.A.
+								Avenida. Libertador con calle El Empalme
+								Complejo MinPetróleo - PDVSA,
+								La Campiña, Caracas - Venezuela.</address>
+
+						<h4 class="example-title text-center mb-50 mt-50 text-white font-weight-800 font-size-18">puedes buscarlos en nuestras redes sociales</h4>
+						<div class="text-center">
+		                	<a href="javascript:void;" class="btn btn-icon social-facebook"><i class="icon bd-facebook" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-twitter"><i class="icon bd-twitter" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-linkedin"><i class="icon bd-linkedin" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-dribbble"><i class="icon bd-dribbble" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-instagram"><i class="icon bd-instagram" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-github"><i class="icon bd-github" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-skype"><i class="icon bd-skype" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-youtube"><i class="icon bd-youtube" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-evernote"><i class="icon bd-evernote" aria-hidden="true"></i></a>
+		                	<a href="javascript:void;" class="btn btn-icon social-google-plus"><i class="icon bd-google-plus" aria-hidden="true"></i></a>
+		                </div>
+					</div>
+					
+				</div>
+
+            		
+            </section>
+            
+	    </div>
+	    
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/owl-carousel/owl.carousel.js"></script>
+	  <script src="public/classic/global/vendor/slick-carousel/slick.js"></script>
+	  <script src="public/classic/global/js/Plugin/owl-carousel.js"></script>
+	  <script src="public/classic/topbar/assets/examples/js/uikit/carousel.js"></script>
+</body>
+</html>
+{% endblock %}

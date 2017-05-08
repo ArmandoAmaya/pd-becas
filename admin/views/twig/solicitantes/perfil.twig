@@ -1,0 +1,323 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/base/assets/examples/css/pages/profile.css">
+<link rel="stylesheet" href="public/classic/global/vendor/webui-popover/webui-popover.css">
+<link rel="stylesheet" href="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.css">
+{% endblock %}
+
+{% block bodyClass %}page-profile{% endblock %}
+
+{% block content %}
+
+    {% include 'templates/nav' %}
+
+    {% include 'templates/sidebar' %}
+  	
+  	<div class="page">
+	    <div class="page-content container-fluid">
+	      	<div class="row">
+		        <div class="col-lg-3">
+			        <div class="card card-shadow text-center">
+			            <div class="card-block">
+				            <a class="avatar avatar-lg" href="javascript:void(0)">
+				                <img src="../{{data.perfil}}">
+				            </a>
+			              	<h4 class="profile-user">{{data.nombre}} {{data.apellido}}</h4>
+			              	<p class="profile-job">Solicitante</p>
+			              	<p>Condición: {{get_cond()[data.condicion]|raw }}</p>
+				            <div class="profile-social">
+
+				            	{% set social =  data.redes_sociales is not empty ? json_to_array(data.redes_sociales) : [] %}
+				            	{% for i,s in social %}
+				            	<a target="_blank" data-toggle="tooltip" data-original-title="{{i|capitalize}}" href="{{s}}">{{ social_icons('14')[i]|raw }}</a>
+				            	{% endfor %}
+				                
+				            </div>
+				            {% if false != solicitud %}
+							<button type="button" class="btn btn-primary" disabled>Solicitud Enviada</button>
+							{% else %}
+							<button type="button" id="solicitud_submit" class="btn btn-primary">Enviar Solicitud</button>
+				            {% endif %}
+			              	
+			            </div>
+			            <div class="card-footer">
+			            	{% if false != solicitud %}
+							<div class="row no-space">
+				                <div class="col-12">
+				                  	<strong class="profile-stat-count">Solicitud Enviada</strong>
+				                  	<span>{{data.tiempo_solicitud|date('d-m-Y - g:i a')}}</span>
+				                </div>
+				            </div>
+			            	{% endif %}
+			             	
+				            {# <div class="row no-space">
+				                <div class="col-4">
+				                  	<strong class="profile-stat-count">260</strong>
+				                  	<span>Follower</span>
+				                </div>
+				                <div class="col-4">
+				                  	<strong class="profile-stat-count">180</strong>
+				                  	<span>Following</span>
+				                </div>
+				                <div class="col-4">
+				                  	<strong class="profile-stat-count">2000</strong>
+				                  	<span>Tweets</span>
+				                </div>
+				            </div> #}
+			            </div>
+			        </div>
+		        </div>
+		        <div class="col-lg-9">
+			        <div class="panel">
+			            <div class="panel-body nav-tabs-animate nav-tabs-horizontal" data-plugin="tabs">
+				            <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+				                <li class="nav-item" role="presentation"><a class="active nav-link" data-toggle="tab" href="#activities"
+				                  aria-controls="activities" role="tab"> <i class="icon wb-user-circle" aria-hidden="true"></i> Datos </a></li>
+				                <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#profile" aria-controls="profile"
+				                  role="tab"> <i class="icon wb-clipboard"></i> Información </a></li>
+				                <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#curriculo" aria-controls="curriculo"
+				                  role="tab"> <i class="icon wb-attach-file"></i> Curriculo </a></li>
+				                
+				                <li class="nav-item dropdown">
+				                  	<a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" aria-expanded="false">Menu </a>
+					                <div class="dropdown-menu" role="menu">
+					                    <a class="active dropdown-item" data-toggle="tab" href="#activities" aria-controls="activities"
+					                    role="tab"> <i class="icon wb-user-circle" aria-hidden="true"></i> Datos </a>
+					                    <a class="dropdown-item" data-toggle="tab" href="#profile" aria-controls="profile"
+					                    role="tab"> <i class="icon wb-clipboard"></i> Información </a>
+					                    <a class="dropdown-item" data-toggle="tab" href="#curriculo" aria-controls="curriculo"
+					                    role="tab"> <i class="icon wb-attach-file"></i> Curriculo </a>
+					                   
+					                </div>
+				                </li>
+				            </ul>
+				            <div class="tab-content">
+				                <div class="tab-pane active animation-slide-left" id="activities" role="tabpanel">
+				                	<div class="row">
+				                		<div class="col-xl-6 col-md-12 col-xs-12 col-sm-12">
+				                			<ul class="list-group list-group-dividered list-group-full">
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon wb-user"></i> Solicitante:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{data.nombre}} {{data.apellido}}</span>
+						                		</li>
+
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon fa fa-phone"></i> Teléfono 1:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{data.telefono1}}</span>
+						                		</li>
+
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon fa fa-indent"></i> Cédula:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{data.nacionalidad}} - {{data.cedula}}</span>
+						                		</li>
+
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-6 col-xl-6 col-xs-12 col-sm-12"><b><i class="icon fa fa-calendar"></i> Fecha de nacimiento:</b></span>
+						                			<span class="text-right col-md-6 col-xl-6 col-xs-12 col-sm-12"> {{data.fecha_nacimiento|date('Y-m-d')}}</span>
+						                		</li>
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-6 col-xl-6 col-xs-12 col-sm-12"><b><i class="icon fa fa-location-arrow"></i> Municipio:</b></span>
+						                			<span class="text-right col-md-6 col-xl-6 col-xs-12 col-sm-12"> {{ data.municipio }}</span>
+						                		</li>
+						                	</ul>
+				                		</div>
+
+				                		<div class="col-xl-6 col-md-12 col-xs-12 col-sm-12">
+				                			<ul class="list-group list-group-dividered list-group-full">
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon wb-envelope"></i>Correo:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{data.correo}}</span>
+						                		</li>
+
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><i class="icon fa fa-phone"></i> <b>Téléfono 2:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12">{{data.telefono2}}</span>
+						                		</li>
+
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><i class="icon fa fa-venus-mars"></i> <b>Género:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12">{{data.genero|capitalize}}</span>
+						                		</li>
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><i class="icon fa fa-bank"></i> <b>Estado:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12">{{data.estado}}</span>
+						                		</li>
+
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><i class="icon fa fa-flag"></i> <b>Parroquia:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12">{{data.parroquia}}</span>
+						                		</li>
+						                
+						                	</ul>
+				                		</div>
+
+				                		<div class="col-xl-12 col-md-12 col-xs-12 col-sm-12">
+				                			<ul class="list-group list-group-dividered list-group-full">
+						                		<li class="list-group-item list-group-item-action">
+						                			<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon fa fa-map-marker"></i>Dirección:</b></span>
+						                			<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{data.direccion}}</span>
+						                		</li>						              
+						                	</ul>
+				                		</div>
+
+				                	</div>
+				                	
+				                </div>
+				                <div class="tab-pane animation-slide-left" id="profile" role="tabpanel">
+				                  	<ul class="list-group list-group-dividered list-group-full">
+						            	<li class="list-group-item">
+					                      	<div class="media">
+						                        <div class="pr-20">
+						                          <a class="avatar" href="javascript:void(0)">
+						                            <img class="img-fluid" src="../{{ beca.perfil }}">
+						                          </a>
+						                        </div>
+						                        <div class="media-body">
+						                          	<h4 class="mt-0 mb-5">{{beca.beca}}</h4>
+						                          	<small>Tipo: {{beca.tipo}}</small>
+						                          	<div class="profile-brief">Lugar de cumplimiento: <span style="font-weight: 600">{{beca.sede}}</span></div>
+						                        </div>
+					                      	</div>
+					                    </li>
+					                    <li class="list-group-item">
+						                    <div class="media">
+						                        <div class="media-body">
+						                          <h4 class="mt-0 mb-5 text-center">Descripción de la beca</h4>
+						                          <div class="profile-brief">{{beca.descripcion|raw}}</div>
+						                        </div>
+						                    </div>
+					                    </li>
+					                    <li class="list-group-item">
+					                      	<div class="media">
+						                        
+						                        <div class="media-body">
+							                        <h4 class="mt-0 mb-5">Grupos</h4>
+							                        <small>Si no se ha escogido un horario de trabajo se debe elegir uno antes de enviar la solicitud</small>
+							                        <div class="profile-brief">
+							                        	<ul class="list-unstyled list-inline" id="listGroups">
+							                        		<li class="list-inline-item">
+							                        			<div class="grup">
+																	
+																	<ul class="list-unstyled list-inline">
+																		{% for grupo in grupos if false != grupos %}
+																		
+																		<li class="list-inline-item" id="item_{{grupo.id}}" onmouseover="mostrarDetalles({{grupo.id}},'{{grupo.grupo}}')">
+
+																			<input {{ solicitud[0][0] == grupo.id ? 'checked' : '' }} style="z-index: 1000;" type="radio" class="to-labelauty grupo_id" name="grupo" data-plugin="labelauty" data-labelauty="{{grupo.grupo}}" value="{{grupo.id}}" />
+
+																		</li>
+																		<div id="group_info_{{grupo.id}}" hidden>
+														                    <ul class="list-group list-group-full list-group-dividered">
+																                <li class="list-group-item justify-content-between">
+																                    <strong>Hora de entrada</strong>
+																                    <span class="badge badge-pill badge-success">{{grupo.formato == 1 ? (grupo.hora_entrada|date('g:i a')) : (grupo.hora_entrada|date('H:i')) }}</span>
+																                </li>
+
+																                <li class="list-group-item justify-content-between">
+																                    <strong>Hora de Salida</strong>
+																                    <span class="badge badge-pill badge-success">{{grupo.formato == 1 ? (grupo.hora_salida|date('g:i a')) : (grupo.hora_salida|date('H:i')) }}</span>
+																                </li>
+																                
+																                <li class="list-group-item justify-content-between">
+																                    <strong>Grupos</strong>
+																                   	{% if grupo.cupos >= 90  %}
+																                   		{% set bdg = 'info' %}
+																                   	{% elseif grupos.cupos >= 30 and grupos.cupos < 90 %}
+																                   		{% set bdg = 'warning' %}
+																                   	{% elseif grupos.cupos < 30 %}
+																                   		{% set bdg = 'danger' %}
+																                   	{% endif %}															                   
+																                    <span class="badge badge-pill badge-{{bdg}}">{{grupo.cupos}}</span>
+																                </li> 
+																                <li class="list-group-item justify-content-between">
+																                    <strong>Dias de cumplimiento</strong>
+																                    {% for dia in json_to_array(grupo.dias) %}
+																                        <span class="badge badge-outline badge-primary">{{dia}}</span>
+																                    {% endfor %}
+																                </li>
+
+	 														                </ul>
+														                </div>
+														                {% endfor %}
+																		
+																	</ul>																	
+				                                                </div>
+				                                            </li>
+			                                            </ul>
+							                        </div>
+						                        </div>
+					                      	</div>
+					                    </li>					              
+						            </ul>
+				                </div>
+				               	<div class="tab-pane animation-slide-left" id="curriculo" role="tabpanel">
+				            		<ul class="list-group list-group-dividered list-group-full">
+						            	<li class="list-group-item">
+					                      	<div class="media">
+						                        <div class="pr-20">
+						                        	{% set cext = fext(data.curriculo) %}
+						                        	{% set al = 'Presionar "ver" para abrir este archivo o "descargar" para bajar el archivo' %}
+						                        	{% if 'pdf' == cext %}
+														<i style="font-size: 100px;" class="fa fa-file-pdf-o"></i>
+													{% elseif 'docx' == cext %}
+														<i style="font-size: 100px;" class="fa fa-file-word-o"></i>
+													{% else %}
+													    <i style="font-size: 100px;" class="fa fa-file-o"></i>
+														{% set al = 'No hay currículo subido' %}
+						                        	{% endif %}
+													
+						                            {#<img class="img-fluid" src="../{{ beca.curriculo }}">#}
+						                        </div>
+						                        <div class="media-body">
+						                          	<h4 class="mt-0 mb-5">Currículo del solicitante</h4>
+						                          	<small>{{al}}</small>
+
+						                          	<div class="profile-brief">
+						                          		<button disabled class="btn btn-primary">Ver <i class="icon wb-file"></i></button>
+						                          		<form style="display:inline-block;" method="POST" action="solicitantes/download/{{data.id}}">
+						                          			<input id="path" type="hidden" name="path" value="{{data.curriculo}}">
+						                          			<button id="download_file" type="submit" class="btn btn btn-dark" {{ data.curriculo is empty ? 'disabled' : '' }} > <i class="icon wb-download"></i> Descargar</button>
+						                          		</form>
+						                          		<input id="beca_id" type="hidden" name="beca_id" value="{{beca.id}}">
+						                          		<input type="hidden" name="id_solicitante" id="id_solicitante" value="{{data.id}}">
+						                          		
+						                          		
+						                          	</div>
+						                          	
+						                        </div>
+					                      	</div>
+					                    </li>
+					                    {#<li class="list-group-item">
+					                        <div class="media">
+					                            <div class="media-body">
+					                            </div>
+					                        </div>
+					                   	</li>#}
+					                    				              
+						            </ul>
+				                </div>
+				            </div>
+			            </div>
+			        </div>
+		        </div>
+	      	</div>
+	    </div>
+	</div>
+    
+  
+  	{% include 'templates/footer' %}
+  	<script src="public/classic/global/js/Plugin/responsive-tabs.js"></script>
+  	<script src="public/classic/global/vendor/webui-popover/jquery.webui-popover.min.js"></script>
+  	<script src="public/classic/global/js/Plugin/webui-popover.js"></script>
+
+  	<script src="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.js"></script>
+  	<script src="public/classic/global/js/Plugin/jquery-labelauty.js"></script>
+  	<script src="public/classic/global/js/Plugin/tabs.js"></script>
+  	<script src="public/dev/js/init.js"></script>
+  	<script src="public/dev/js/solicitantes/solicitud.js"></script>
+
+  	
+</body>
+</html>
+{% endblock %}

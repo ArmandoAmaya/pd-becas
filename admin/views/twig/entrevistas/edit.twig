@@ -1,0 +1,120 @@
+{% extends 'templates/header' %}
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/clockpicker/clockpicker.css">
+<link rel="stylesheet" href="public/classic/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
+<link rel="stylesheet" href="public/classic/global/vendor/summernote/summernote.css">
+<link rel="stylesheet" href="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.css">
+{% endblock %}
+{% block content %}
+  {% include 'templates/nav' %}
+ 
+  {% include 'templates/sidebar' %}
+
+    <div class="page container-fluid">
+        <div class="page-header">
+            <h1 class="page-title">Gestión de entrevistas</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="entrevistas/">entrevistas</a></li>
+                <li class="breadcrumb-item active">Crear</li>
+            </ol>
+        </div>
+        <div class="panel">
+        <div class="panel-body container-fluid">
+          <div class="row row-lg">
+            <div class="col-md-12 col-lg-12">
+
+                <div class="example-wrap">
+                    <h4 class="example-title">entrevistas - Edición</h4>
+                    <div class="example">
+                        <form id="entrevistas_form" autocomplete="off">
+
+                            <input type="hidden" name="id" value="{{data.id}}" id="id">
+
+
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-sm-12 col-xl-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="title">Título <span class="required">*</span></label>
+                                      <input type="text" id="title" class="form-control" name="title" placeholder="Título para entrevista" autocomplete="off" value="{{data.titulo}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6 col-sm-12 col-xl-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="lugar">Lugar <span class="required">*</span></label>
+                                      <input type="text" id="lugar" class="form-control" name="lugar" placeholder="Lugar de la entrevista" autocomplete="off" value="{{data.lugar}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-3 col-sm-6 col-xl-2">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="fecha">Fecha <span class="required">*</span></label>
+                                        <div class="input-group">
+                                          <span class="input-group-addon">
+                                            <i class="icon wb-calendar" aria-hidden="true"></i>
+                                          </span>
+                                          <input type="text" id="fecha" name="fecha" class="form-control" data-plugin="datepicker" placeholder="Fecha" data-format="dd-mm-yyyy" value="{{data.fecha|date('d-m-Y')}}">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xs-12 col-md-3 col-sm-6 col-xl-2">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="hora">Hora <span class="required">*</span></label>
+                                      <div class="input-group">
+                                        <span class="input-group-addon">
+                                          <span class="wb-time"></span>
+                                        </span>
+                                        <input type="text" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" placeholder="Hora" id="hora" name="hora" value="{{data.hora|date('h:i')}}">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <input type="checkbox" class="to-labelauty" name="formato" data-plugin="labelauty" data-labelauty="Formato: 12 horas" value="1" {{data.formato == 1 ? 'checked' : ''}} />
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6 col-sm-12 col-xl-8">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="hora">Mensaje <span class="required">*</span></label>
+                                      <div id="summernote" data-plugin="summernote">{{data.mensaje|raw}}</div>
+                                      <input type="hidden" name="desc" id="desc" value="{{data.mensaje}}">
+                                    </div>
+                                </div> 
+
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="entrevistas_submit" class="btn btn-primary">Editar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  {% include 'templates/footer' %}
+  <script src="public/classic/global/vendor/clockpicker/bootstrap-clockpicker.min.js"></script>
+  <script src="public/classic/global/js/Plugin/clockpicker.js"></script>
+
+  <script src="public/classic/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="public/classic/global/js/Plugin/bootstrap-datepicker.js"></script>
+
+  <script src="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.js"></script>
+  <script src="public/classic/global/js/Plugin/jquery-labelauty.js"></script>
+
+  <script src="public/classic/global/vendor/summernote/summernote.min.js"></script>
+  <script src="public/classic/global/js/Plugin/summernote.js"></script>
+  <script src="public/dev/js/init.js"></script>
+
+  <script src="public/dev/js/entrevistas/edit.js"></script>
+</body>
+</html>
+{% endblock %}
+
+
+

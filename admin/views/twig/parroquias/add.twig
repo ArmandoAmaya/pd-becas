@@ -1,0 +1,71 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/select2/select2.css">
+{% endblock %}
+
+{% block content %}
+  {% include 'templates/nav' %}
+ 
+  {% include 'templates/sidebar' %}
+
+    <div class="page">
+        <div class="page-header">
+            <h1 class="page-title">Gestión de parroquias</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="parroquias/">parroquias</a></li>
+                <li class="breadcrumb-item active">Crear</li>
+            </ol>
+        </div>
+        <div class="panel">
+        <div class="panel-body container-fluid">
+          <div class="row row-lg">
+            <div class="col-md-12 col-lg-12">
+
+                <div class="example-wrap">
+                    <h4 class="example-title">parroquias - Creación</h4>
+                    <div class="example">
+                        <form id="parroquias_form" autocomplete="off">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="c">Parroquia <span class="required">*</span></label>
+                                      <input type="text" id="c" class="form-control" name="c" placeholder="Nombe de la parroquia" autocomplete="off">
+                                    </div>
+                                </div> 
+
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="c">Municipio de la Parroquia <span class="required">*</span></label>
+                                      <select class="form-control" name="id_municipio" data-plugin="select2" data-placeholder="Selecciona una Parroquia"data-allow-clear="true">
+                                        <option></option>
+                                        <optgroup label="Municipios">
+                                          {% for i,e in municipios %}
+                                              <option value="{{ i }}">{{ e }}</option>
+                                          {% endfor %}
+                                        </optgroup>
+                                        
+                                      </select>
+                                    </div>
+                                </div>  
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="parroquias_submit" class="btn btn-primary">Crear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  {% include 'templates/footer' %}
+  <script src="public/classic/global/vendor/select2/select2.full.min.js"></script>
+  <script src="public/classic/global/js/Plugin/select2.js"></script>
+  <script src="public/dev/js/parroquias/create.js"></script>
+</body>
+</html>
+{% endblock %}

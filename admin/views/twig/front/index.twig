@@ -1,0 +1,173 @@
+{% extends 'templates/header' %}
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/base/assets/examples/css/widgets/statistics.css">
+{% endblock %}
+{% block content %}
+  {% include 'templates/nav' %}
+  
+  {% include 'templates/sidebar' %}
+
+  
+  
+	<div class="page">
+		<div class="page-header">
+		    <h1 class="page-title">Escritorio</h1>
+		    <ol class="breadcrumb">
+		        <li class="breadcrumb-item"><a href="{{ constant('UR') }}">Panel Administrativo</a></li>
+		        <li class="breadcrumb-item active">Escritorio</li>
+		    </ol>
+		</div>
+	    <div class="page-content">
+	    	<div class="row">
+	    		{% if 2 == user.rango %}
+
+
+	    		<div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+			        <div class="card card-block p-30 bg-blue-600">
+			            <div class="card-watermark darker font-size-60 m-15"><i class="icon wb-user-circle" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+			              	<div class="counter-number-group">
+			                	<span class="counter-number">{{false != admins ? admins[0][0] : 0}}</span>
+			                	<span class="counter-number-related text-capitalize">Admins</span>
+			              	</div>
+			              	<div class="counter-label text-capitalize"><a style="color:white" href="admins/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+
+			        <div class="card card-block p-30 bg-red-600">
+			            <div class="card-watermark darker font-size-60 m-15"><i class="icon wb-users" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+				            <div class="counter-number-group">
+				                <span class="counter-number">{{false != empleados ? empleados[0][0] : 0}}</span>
+				                <span class="counter-number-related text-capitalize">Empleados</span>
+				            </div>
+				            <div class="counter-label text-capitalize"><a style="color:white" href="empleados/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+
+			        <div class="card card-block p-30 bg-green-600">
+			            <div class="card-watermark darker font-size-60 m-15"><i class="icon fa fa-bank" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+				            <div class="counter-number-group">
+				                <span class="counter-number">{{false != estados ? estados[0][0] : 0}}</span>
+				                <span class="counter-number-related text-capitalize">Estados</span>
+				            </div>
+				            <div class="counter-label text-capitalize"><a style="color:white" href="estados/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+
+			        <div class="card card-block p-30 bg-purple-600">
+			            <div class="card-watermark lighter font-size-60 m-15"><i class="icon fa fa-location-arrow" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+				            <div class="counter-number-wrap font-size-30">
+				                <span class="counter-number">{{false != municipios ? municipios[0][0] : 0}}</span>
+				                <span class="counter-number-related text-capitalize">Municipios</span>
+				            </div>
+				            <div class="counter-label text-capitalize"><a style="color:white" href="municipios/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+			        <div class="card card-block p-30 bg-blue-600">
+			            <div class="card-watermark darker font-size-60 m-15"><i class="icon fa fa-flag" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+			              	<div class="counter-number-group">
+			                	<span class="counter-number">{{false != parroquias ? parroquias[0][0] : 0}}</span>
+			                	<span class="counter-number-related text-capitalize">Parroquias</span>
+			              	</div>
+			              	<div class="counter-label text-capitalize"><a style="color:white" href="parroquias/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+
+			        <div class="card card-block p-30 bg-red-600">
+			            <div class="card-watermark darker font-size-60 m-15"><i class="icon fa fa-street-view" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+				            <div class="counter-number-group">
+				                <span class="counter-number">{{false != grupos ? grupos[0][0] : 0}}</span>
+				                <span class="counter-number-related text-capitalize">Grupos</span>
+				            </div>
+				            <div class="counter-label text-capitalize"><a style="color:white" href="grupos/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+
+			        <div class="card card-block p-30 bg-green-600">
+			            <div class="card-watermark darker font-size-60 m-15"><i class="icon wb-globe" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+				            <div class="counter-number-group">
+				                <span class="counter-number">{{false != becas ? becas[0][0] : 0}}</span>
+				                <span class="counter-number-related text-capitalize">Estados</span>
+				            </div>
+				            <div class="counter-label text-capitalize"><a style="color:white" href="becas/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+		        {% endif %}
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+
+			        <div class="card card-block p-30 bg-purple-600">
+			            <div class="card-watermark lighter font-size-60 m-15"><i class="icon wb-users" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+				            <div class="counter-number-wrap font-size-30">
+				                <span class="counter-number">{{false != solicitantes ? solicitantes[0][0] : 0}}</span>
+				                <span class="counter-number-related text-capitalize">Solicitantes</span>
+				            </div>
+				            <div class="counter-label text-capitalize"><a style="color:white" href="solicitantes/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+			        <div class="card card-block p-30 bg-blue-600">
+			            <div class="card-watermark darker font-size-60 m-15"><i class="icon wb-clipboard" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+			              	<div class="counter-number-group">
+			                	<span class="counter-number">{{false != entrevistas ? entrevistas[0][0] : 0}}</span>
+			                	<span class="counter-number-related text-capitalize">Entrevistas</span>
+			              	</div>
+			              	<div class="counter-label text-capitalize"><a style="color:white" href="entrevistas/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+		        <div class="col-md-4 col-xl-4 col-xs-12 col-sm-4 col-sm-6">
+
+			        <div class="card card-block p-30 bg-red-600">
+			            <div class="card-watermark darker font-size-60 m-15"><i class="icon wb-book" aria-hidden="true"></i></div>
+			            <div class="counter counter-md counter-inverse text-left">
+				            <div class="counter-number-group">
+				                <span class="counter-number">{{false != solicitudes ? solicitudes[0][0] : 0}}</span>
+				                <span class="counter-number-related text-capitalize">Solicitudes</span>
+				            </div>
+				            <div class="counter-label text-capitalize"><a style="color:white" href="solicitudes/">Ver todos</a></div>
+			            </div>
+			        </div>
+
+		        </div>
+	    	</div>
+	      	
+	    </div>
+	</div>
+  
+  {% include 'templates/footer' %}
+</body>
+</html>
+{% endblock %}

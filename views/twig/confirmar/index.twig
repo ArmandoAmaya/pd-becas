@@ -1,0 +1,41 @@
+{% extends 'templates/header' %}
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="public/classic/global/vendor/slick-carousel/slick.css">
+<link rel="stylesheet" href="public/classic/topbar/assets/examples/css/uikit/carousel.css">
+<link rel="stylesheet" href="public/classic/topbar/assets/examples/css/forms/layouts.css">
+{% endblock %}
+{% block content %}
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+		<div class="page-header page-header-bordered text-center mb-50">
+			<h1 class="page-title">PD-Becas</h1>
+			<h4 class="example-title">Confirmar cuenta</h4>
+		</div>
+		<div class="pl-5 pr-5">
+			<div role="alert" class="alert dark alert-alt alert-info">
+	               
+	            <h4> <i class="icon wb-info-circle"></i> INFORMACION:</h4>
+	            <p class="font-size-18 py-15">
+	                <b>Has confirmado tu cuenta de forma exitosa.</b>
+	           </p>
+	            <p class="mt-15">
+	              	<a href="{{constant('URL')}}" class="btn btn-info btn-inverse btn-outline">Pagina principal</a>
+	            </p>
+	        </div>
+		</div>
+	    
+	    
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/owl-carousel/owl.carousel.js"></script>
+	  <script src="public/classic/global/vendor/slick-carousel/slick.js"></script>
+	  <script src="public/classic/global/js/Plugin/owl-carousel.js"></script>
+	  <script src="public/classic/topbar/assets/examples/js/uikit/carousel.js"></script>
+</body>
+</html>
+{% endblock %}

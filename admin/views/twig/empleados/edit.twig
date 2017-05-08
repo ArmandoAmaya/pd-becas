@@ -1,0 +1,162 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/dropify/dropify.css">
+{% endblock %}
+
+{% block content %}
+  {% include 'templates/nav' %}
+ 
+  {% include 'templates/sidebar' %}
+
+    <div class="page">
+        <div class="page-header">
+            <h1 class="page-title">Gestión de empleados</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="empleados/">empleados</a></li>
+                <li class="breadcrumb-item active">Crear</li>
+            </ol>
+        </div>
+        <div class="panel">
+        <div class="panel-body container-fluid">
+          <div class="row row-lg">
+            <div class="col-md-12 col-lg-12">
+
+                <div class="example-wrap">
+                    <h4 class="example-title">empleados - Edición</h4>
+                    <div class="example">
+                        <form id="empleados_form" autocomplete="off">
+
+                            <input type="hidden" name="id" value="{{data.id}}" id="id">
+
+
+                            <div class="nav-tabs-horizontal" data-plugin="tabs">
+                              <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
+                                  aria-controls="exampleTabsOne" role="tab">Datos de administrador</a></li>
+                                <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
+                                  aria-controls="exampleTabsTwo" role="tab">Datos adicionales</a></li>                              
+                              </ul>
+
+                              <div class="tab-content pt-20">
+                                <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+                                  <div class="row">
+                                    <div class="col-md-6 col-xs-12">
+
+                                      <div class="form-group">
+                                        <label class="form-control-label" for="name">Nombre <span class="required">*</span></label>
+                                        <input type="text" id="name" class="form-control" name="name" placeholder="Nombre del administrador" autocomplete="off" value="{{ data.nombre }}">
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-control-label" for="ape">Apellido <span class="required">*</span></label>
+                                        <input type="text" id="ape" class="form-control" name="ape" placeholder="Apellido del administrador" autocomplete="off" value="{{ data.apellido }}">
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-control-label" for="ced">Cédula de identidad<span class="required">*</span></label>
+                                        <input type="tel" id="ced" class="form-control numeric" name="ced" placeholder="Cédula del administrador" autocomplete="off" value="{{ data.cedula }}">
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-control-label" for="email">Correo Electrónico <span class="required">*</span></label>
+                                        <input type="email" id="email" class="form-control" name="email" placeholder="Correo del administrador" autocomplete="off" value="{{ data.correo }}">
+                                      </div>
+
+
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+
+                                      <div class="example-wrap">
+                                         <h4 class="example-title">Imágen de Perfil</h4>
+                                         <div class="example">
+                                           <input type="file" name="perfil" id="input-file-now-custom-1" data-default-file="../{{ data.perfil }}" data-height="130" data-plugin="dropify" accept="image/*" />
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-control-label" for="pass">Cambiar Contraseña </label>
+                                        <input type="password" id="pass" class="form-control" name="pass" placeholder="Cambiar contraseña" autocomplete="off">
+                                      </div>
+
+                                    
+                                      <div class="form-group">
+                                        <label>Género <span class="required">*</span></label>
+                                        
+
+
+                                        <ul class="list-unstyled list-inline">
+                                          <li class="list-inline-item">
+                                            <div class="radio-custom radio-primary">
+                                              <input type="radio" id="m" name="gen" value="masculino" {{data.genero  == 'masculino' ? 'checked' : ''}}>
+                                              <label for="m">Masculino</label>
+                                            </div>
+                                          </li>
+                                          <li class="list-inline-item">
+                                            <div class="radio-custom radio-primary">
+                                              <input type="radio" id="f" name="gen" value="femenino" {{data.genero  == 'femenino' ? 'checked' : ''}}>
+                                              <label for="f">Femenino</label>
+                                            </div>
+                                          </li>
+                                        </ul>                                     
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                                  <div class="row">
+                                      
+
+                                      <div class="form-group col-md-6 col-xs-12 col-sm-12">
+                                        <label class="form-control-label" for="tel">Número de teléfono 1</label>
+
+                                        <input type="tel" class="form-control numeric" id="tel" name="tel" placeholder="Escribe un número de teléfono" value="{{data.telefono1}}" />
+                                      </div>
+
+                                      <div class="form-group col-md-6 col-xs-12 col-sm-12">
+                                        <label class="form-control-label" for="tel2">Número de teléfono 2 </label>
+                                        <input type="tel" class="form-control numeric" id="tel2" name="tel2" placeholder="Escribe otro número de teléfono" value="{{ data.telefono2 }}" />
+                                      </div>
+
+                                      <div class="form-group col-md-6 col-xs-12 col-sm-12">
+                                        <label class="form-control-label" for="fecha">Fecha de nacimiento </label>
+
+                                        <input type="text" class="form-control" id="fecha" name="fecha" data-plugin="formatter" data-pattern="[[9999]]-[[99]]-[[99]]" value="{{data.fecha_nacimiento|date('Y-m-d')}}" />
+                                        <p class="text-help">Ejemplo: {{"now"|date('Y-m-d')}}</p>
+
+                                      </div>
+
+
+                                      <div class="form-group col-md-6 col-xs-12 col-sm-12">
+                                        <label class="form-control-label" for="dir">Dirección</label>
+                                        <textarea class="form-control" name="textareaDefault" id="dir" rows="3">{{data.direccion}}</textarea>
+                                      </div>
+
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="empleados_submit" class="btn btn-primary">Editar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  {% include 'templates/footer' %}
+  <script src="public/classic/global/vendor/dropify/dropify.js"></script>
+  <script src="public/classic/global/js/Plugin/dropify.js"></script>
+  <script src="public/dev/js/empleados/edit.js"></script>
+</body>
+</html>
+{% endblock %}
+
+
+

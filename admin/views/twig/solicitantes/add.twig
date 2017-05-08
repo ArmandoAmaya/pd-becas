@@ -1,0 +1,281 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/jquery-wizard/jquery-wizard.css">
+<link rel="stylesheet" href="public/classic/global/vendor/formvalidation/formValidation.css">
+<link rel="stylesheet" href="public/classic/global/vendor/dropify/dropify.css">
+<link rel="stylesheet" href="public/classic/global/vendor/select2/select2.css">
+<link rel="stylesheet" href="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.css">
+{% endblock %}
+
+{% block content %}
+  {% include 'templates/nav' %}
+ 
+  {% include 'templates/sidebar' %}
+
+    <div class="page container-fluid">
+      <div class="page-header">
+          <h1 class="page-title">Gestión de solicitantes</h1>
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="solicitantes/">solicitantes</a></li>
+              <li class="breadcrumb-item active">Crear</li>
+          </ol>
+      </div>
+      <div class="col-xs-12">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-xs-12">
+              <div class="panel panel-primary panel-line" id="exampleWizardFormContainer">
+
+                <div class="panel-heading">
+                  <h3 class="panel-title">Registro de solicitante</h3>
+                </div>
+                <div class="panel-body">
+
+                  <div class="pearls row">
+                    <div class="pearl current col-3">
+                      <div class="pearl-icon"><i class="icon wb-user" aria-hidden="true"></i></div>
+                      <span class="pearl-title">Datos de usuario</span>
+                    </div>
+                    <div class="pearl col-3">
+                      <div class="pearl-icon"><i class="icon wb-payment" aria-hidden="true"></i></div>
+                      <span class="pearl-title">Datos personales</span>
+                    </div>
+                    <div class="pearl col-3">
+                      <div class="pearl-icon"><i class="icon wb-globe" aria-hidden="true"></i></div>
+                      <span class="pearl-title">Último paso</span>
+                    </div>
+                    <div class="pearl col-3">
+                      <div class="pearl-icon"><i class="icon wb-check" aria-hidden="true"></i></div>
+                      <span class="pearl-title">Confirmación</span>
+                    </div>
+                  </div>
+
+                  <form id="solicitantes_form" autocomplete="off" class="wizard-content">
+
+                    <div class="wizard-pane active" id="exampleAccountOne" role="tabpanel">
+                      <div class="row">
+                        <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                          <label class="form-control-label" for="email">Email <span class="required">*</span></label>
+                          <input type="email" class="form-control" id="email" name="email" required="required">
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                          <label class="form-control-label" for="emaildos">Confirmar Email <span class="required">*</span></label>
+                          <input type="email" class="form-control" id="emaildos" name="emaildos" required="required">
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                          <label class="form-control-label" for="pass">Contraseña <span class="required">*</span></label>
+                          <input type="password" class="form-control" id="pass" name="pass" required="required">
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                          <label class="form-control-label" for="passdos">Confirmar contraseña <span class="required">*</span></label>
+                          <input type="password" class="form-control" id="passdos" name="passdos" required="required">
+                        </div>
+                        
+                        <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                          <input type="checkbox" id="generate" class="to-labelauty" name="generate" data-plugin="labelauty" data-labelauty="Generar contraseña automaticamente" value="1" />
+                        </div>
+
+
+                        <div class="form-group col-md-6 col-lg-6 col-sm-6 hide col-xs-12">
+                          <h5 class="text-help hide" id="pass_generated"></h5>
+                        </div>
+
+                      </div>
+                      
+
+                    </div>
+
+
+                    <div class="wizard-pane" id="exampleBillingOne" role="tabpanel">
+                      <div class="row">
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="nombre">Nombre <span class="required">*</span></label>
+                          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del solicitante">
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="apellido">Apellido <span class="required">*</span></label>
+                          <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido del solicitante">
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="col-xl-12 col-md-3 form-control-label">Género
+                            <span class="required">*</span>
+                          </label>
+                          <div class="col-xl-12 col-md-6">
+                            <div class="input-group">
+                              <div>
+                                <div class="radio-custom radio-primary">
+                                  <input type="radio" id="masculino" name="genero" value="masculino" required="">
+                                  <label for="masculino">Masculino</label>
+                                </div>
+                              </div>
+                              <div>
+                                <div class="radio-custom radio-primary">
+                                  <input type="radio" id="femenino" name="genero" value="femenino">
+                                  <label for="femenino">Femenino</label>
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                          <label class="form-control-label" for="ced">Cédula de identidad <span class="required">*</span></label>
+                          <input type="tel" class="form-control numeric" id="ced" name="ced" required="required" placeholder="Cédula de identidad del solicitante">
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="tel1">Teléfono 1 <span class="required">*</span></label>
+                          <input type="tel" class="form-control numeric" id="tel1" name="tel1" placeholder="Ej: 04245559589">
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="tel2">Teléfono 2 <span class="required">*</span></label>
+                          <input type="tel" class="form-control numeric" id="tel2" name="tel2" placeholder="Ej: 02615554748">
+                        </div>
+
+                        <div class="form-group col-md-8 col-lg-8 col-xs-12">
+                          <label class="form-control-label" for="dir">Dirección <span class="required">*</span></label>
+                          <textarea name="dir" id="dir" class="form-control" rows="2" placeholder="Dirección del lugar donde vive el solicitante"></textarea>
+                        </div>
+
+                        <div class="form-group col-md-4 col-lg-4 col-xs-12">
+                          <label class="form-control-label" for="fecha">Fecha de nacimiento <span class="required">*</span></label>
+                          <input type="text" class="form-control" id="fecha" name="fecha" placeholder="YYYY-MM-DD" />
+                          <p class="text-help">Ejemplo: {{"now"|date('Y-m-d')}}</p>
+                        </div>
+
+                      </div>
+                
+                    </div>
+                    <div class="wizard-pane" id="exampleGettingOne" role="tabpanel">
+                      <div class="text-center my-20">
+                        <h4>¡Ya casi terminamos!</h4>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="tel2">Estado <span class="required">*</span></label>
+                          <select class="form-control" name="estado" id="estado" data-plugin="select2" data-placeholder="Selecciona un Estado" data-allow-clear="true">
+                            <option></option>
+                            {% for i,e in estados %}
+                            <option value="{{i}}">{{e}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="tel2">Municipio<span class="required">*</span></label>
+                          <select class="form-control" name="municipio" id="municipio" disabled data-plugin="select2" data-placeholder="Selecciona un Municipio" data-allow-clear="true">
+                            <option></option>
+                          </select>
+                        </div>
+
+
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="tel2">Parroquia <span class="required">*</span></label>
+                          <select class="form-control" name="parroquia" id="parroquia" disabled data-plugin="select2" data-placeholder="Selecciona una parroquia" data-allow-clear="true">
+                            <option></option>
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="tel2">Beca <span class="required">*</span></label>
+                          <select class="form-control" name="beca" id="beca" data-plugin="select2" data-placeholder="Selecciona una Beca" data-allow-clear="true">
+                            <option></option>
+                            {% for i,e in becas %}
+                            <option value="{{i}}">{{e}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                          <label class="form-control-label" for="tel2">Nacionalidad <span class="required">*</span></label>
+                          <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                              <input type="radio" class="to-labelauty" name="nacionalidad" data-plugin="labelauty" data-labelauty="Venezolano" value="V" />
+                            </li>
+                            <li class="list-inline-item">
+                              <input type="radio" class="to-labelauty" name="nacionalidad" data-plugin="labelauty" data-labelauty="Extranjero" value="E" />
+                            </li>
+                          </ul>
+                        </div>
+
+                        
+
+                        <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                          <h4>Condición: {{get_cond()[0]|raw }}</h4>
+                          
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-4 col-xs-12">
+              <div class="panel panel-success panel-line">
+
+                <div class="panel-heading p-5">
+                  <h3 class="panel-title">Imagen del usuario</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="example-wrap">
+                      <div class="example">
+                        <input type="file" name="perfil" id="perfil" data-height="130" data-plugin="dropify" accept="image/*" />
+                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-info panel-line">
+
+                <div class="panel-heading p-5">
+                  <h3 class="panel-title">Currículo</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="example-wrap">
+                      <div class="example">
+                        <input type="file" name="curriculo" id="curriculo" data-height="130" data-plugin="dropify" accept="" />
+                     </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+      </div>
+    </div>
+  
+  {% include 'templates/footer' %}
+  <script src="public/classic/global/vendor/formvalidation/formValidation.js"></script>
+  <script src="public/classic/global/vendor/formvalidation/framework/bootstrap.js"></script>
+  <script src="public/classic/global/vendor/matchheight/jquery.matchHeight-min.js"></script>
+  <script src="public/classic/global/vendor/jquery-wizard/jquery-wizard.js"></script>
+
+  <script src="public/classic/global/js/Plugin/jquery-wizard.js"></script>
+  <script src="public/classic/global/js/Plugin/matchheight.js"></script>
+  <script src="public/classic/global/vendor/dropify/dropify.js"></script>
+  <script src="public/classic/global/js/Plugin/dropify.js"></script>
+
+  <script src="public/classic/global/vendor/select2/select2.full.min.js"></script>
+  <script src="public/classic/global/js/Plugin/select2.js"></script>
+  <script src="public/classic/global/vendor/jquery-labelauty/jquery-labelauty.js"></script>
+  <script src="public/classic/global/js/Plugin/jquery-labelauty.js"></script>
+
+  <script src="public/dev/js/password.js"></script>
+  <script src="public/dev/js/solicitantes/create.js"></script>
+</body>
+</html>
+{% endblock %}
+

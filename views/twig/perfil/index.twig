@@ -1,0 +1,279 @@
+{% extends 'templates/header' %}
+
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/slick-carousel/slick.css">
+<link rel="stylesheet" href="public/classic/topbar/assets/examples/css/pages/profile-v2.css">
+{% endblock %}
+
+
+{% block BodyClass %}page-profile-v2{% endblock %}
+
+{% block content %}
+
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+	    <div class="page-content container-fluid">
+	      <div class="row">
+
+	        <div class="col-lg-12 col-xl-6 push-xl-3">
+	          
+	          <div class="user-background card card-shadow">
+	            <div class="card-header card-header-transparent p-20">
+	              <h4 class="card-title mb-0">Datos del usuario</h4>
+	            </div>
+	            <div class="card-block">
+		            <h5 class="card-title">
+		                <i class="icon wb-clipboard"></i>
+		                <span>Información</span>
+		            </h5>
+				    <ul class="list-group list-group-dividered list-group-full">
+						<li class="list-group-item list-group-item-action">
+							<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon wb-user"></i> Solicitante:</b></span>
+							<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{user.nombre}} {{user.apellido}}</span>
+						</li>
+
+						<li class="list-group-item list-group-item-action">
+							<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon fa fa-phone"></i> Teléfono 1:</b></span>
+							<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{user.telefono1}}</span>
+						</li>
+
+						<li class="list-group-item list-group-item-action">
+							<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon fa fa-indent"></i> Cédula:</b></span>
+							<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{user.nacionalidad}} - {{user.cedula}}</span>
+						</li>
+
+						<li class="list-group-item list-group-item-action">
+						    <span class="text-left col-md-6 col-xl-6 col-xs-12 col-sm-12"><b><i class="icon fa fa-calendar"></i> Fecha de nacimiento:</b></span>
+						   	<span class="text-right col-md-6 col-xl-6 col-xs-12 col-sm-12"> {{user.fecha_nacimiento|date('Y-m-d')}}</span>
+						</li>
+						<li class="list-group-item list-group-item-action">
+						   	<span class="text-left col-md-6 col-xl-6 col-xs-12 col-sm-12"><b><i class="icon fa fa-location-arrow"></i> Municipio:</b></span>
+						   	<span class="text-right col-md-6 col-xl-6 col-xs-12 col-sm-12"> {{ user.municipio }}</span>
+						</li>
+
+						<li class="list-group-item list-group-item-action">
+							<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon wb-envelope"></i>Correo:</b></span>
+							<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{user.correo}}</span>
+						</li>
+
+						<li class="list-group-item list-group-item-action">
+							<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><i class="icon fa fa-phone"></i> <b>Téléfono 2:</b></span>
+							<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12">{{user.telefono2}}</span>
+						</li>
+
+						<li class="list-group-item list-group-item-action">
+							<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><i class="icon fa fa-venus-mars"></i> <b>Género:</b></span>
+							<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12">{{user.genero|capitalize}}</span>
+						</li>
+						<li class="list-group-item list-group-item-action">
+							<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><i class="icon fa fa-bank"></i> <b>Estado:</b></span>
+							<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12">{{user.estado}}</span>
+						</li>
+
+						<li class="list-group-item list-group-item-action">
+							<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><i class="icon fa fa-flag"></i> <b>Parroquia:</b></span>
+							<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12">{{user.parroquia}}</span>
+						</li>
+						<ul class="list-group list-group-dividered list-group-full">
+						   	<li class="list-group-item list-group-item-action">
+						   		<span class="text-left col-md-3 col-xl-3 col-xs-12 col-sm-12"><b><i class="icon fa fa-map-marker"></i>Dirección:</b></span>
+						   		<span class="text-right col-md-9 col-xl-9 col-xs-12 col-sm-12"> {{user.direccion}}</span>
+						   	</li>						              
+						</ul>
+					</ul>
+
+	            </div>
+	            <div class="card-block">
+	              <h5 class="card-title">
+	                <i class="icon wb-briefcase"></i>
+	                <span>Datos de solicitud</span>
+	              </h5>
+
+					{% if pend == false %}
+		            <ul class="timeline timeline-single">
+		                <li class="timeline-item">
+		                  <div class="timeline-dot"></div>
+		                  <div class="timeline-content">
+		                    <img class="float-right" src="{{bs.perfil}}" alt="{{bs.perfil}}"
+		                    />
+		                    <span class="block font-size-15 mb-5">{{bs.beca}}</span>
+		                    <span class="block mb-5">Tipo: {{bs.tipo}}</span>
+		                    <span class="block mb-5">Sede: {{bs.sede}}</span>
+		                  </div>
+		                </li>
+		                <li class="timeline-item">
+		                  <div class="timeline-dot"></div>
+		                  <div class="timeline-content">
+		                    <img class="float-right" src="public/dev/images/group-icon.png" alt="public/dev/images/group-icon.png"
+		                    />
+		                    <span class="block font-size-15 mb-5">{{gs.grupo}}</span>
+		                    <span class="block mb-5">Cupos restantes: {{gs.cupos}}</span>
+							{% set strHora = gs.formato == 1 ? 'g:i a' : 'H:i' %}
+		                    <span class="block mb-5">Horario: {{ gs.hora_entrada|date(strHora) }} - {{gs.hora_salida|date(strHora)}}</span>
+		                  </div>
+		                </li>
+		                
+		                <li class="timeline-item">
+		                  <div class="timeline-dot"></div>
+		                  <div class="timeline-content">
+		                    <img class="float-right" src="public/dev/images/entrevista-personal.jpg" alt="public/dev/images/entrevista-personal.jpg"
+		                    />
+		                    {% if false != se %}						
+							<span class="block font-size-15 mb-5">{{se.titulo}}</span>
+							{% set strHora = se.formato == 1 ? 'g:i a' : 'H:i' %}
+		                    <span class="block mb-5">Dia: {{se.fecha|date('d-m-Y')}} a las {{se.hora|date(strHora)}}</span>
+		                    <span class="block mb-5">Lugar: {{se.lugar}}</span>
+		                    {% else %}
+		                    <span class="block font-size-15 mb-5">Entrevista</span>
+		                    <span class="block mb-5">Dia: Pendiente</span>
+		                    <span class="block mb-5">Lugar: Pendiente</span>
+		                    {% endif %}
+		                  </div>
+		                </li>
+		                
+		            </ul>
+		            {% endif %}
+	            </div>
+	            
+	            <div class="card-block">
+
+	            </div>
+	          </div>
+
+	        </div>
+
+	        <!-- Left Column -->
+	        <div class="col-lg-6 col-xl-3 pull-xl-6">
+		        <div class="user-info card card-shadow text-center">
+		            <div class="user-base card-block">
+		              <a class="avatar img-bordered avatar-100" href="javascript:void(0)">
+		                <img src="{{user.perfil}}" alt="{{user.perfil}}">
+		              </a>
+		              <h4 class="user-name">Solicitante</h4>
+		              <p class="user-job">Condición: {{ get_cond()[user.condicion]|raw }}</p>
+		              <p class="user-location">{{ pend ? 'Pendiente por enviar solicitud' : 'Solicitud enviada'}}</p>
+		            </div>
+		            <div class="user-actions">
+		              <a class="btn btn-primary btn-round btn-outline" {{pend ? '' : 'disabled'}} href="perfil/solicitud/" name="follow">Solicitud</a>
+		              
+		            </div>
+					
+		           	
+		            <div class="user-socials list-group list-group-full">
+		            	{% if user.redes_sociales is not empty %}
+		            	{% set redes = json_to_array(user.redes_sociales) %}
+		            	{% for i,r in redes %}
+		            	<a class="list-group-item justify-content-center" href="{{r}}" target="_blank">
+			                {{ social_icons('14')[i]|raw}}  {{i|capitalize}}
+			            </a>
+		            	{% endfor %}
+		            	{% endif %}
+			            
+			            
+		            </div>
+		            <div class="card-footer">
+		              {% if false == pend %}
+						<p class="mb-2"><b>Solicitud enviada</b></p>
+						<p class="my-0">{{user.tiempo_solicitud|date('d-m-Y - g:i a')}}</p>
+		              {% endif %}
+		            </div>
+		        </div>
+		        <div class="user-friends card card-shadow">
+		            <div class="card-block text-center">
+			            <h4 class="card-title mb-20">
+			                Becas
+			            </h4>
+		              	
+		              	{% if bcsol %}
+		              	<p>Este Solicitante no ha escodigo todavía ninguna beca.</p>
+		              	{% endif %}
+
+						{% for b in becas if false != becas %}
+						<a class="inline-block mr-5 ml-5" href="#">
+
+							<div class="avatar avatar-online avatar-lg m-5">
+				                <img src="{{b.perfil}}" alt="{{b.perfil}}" />
+				                <i></i>
+				            </div>
+				            <b class="block">{{b.beca}}</b>
+			            </a>
+						{% endfor %}
+		            </div>
+		        </div>	          
+	        </div>
+	     
+	        <div class="col-lg-6 col-xl-3 ">
+	          <div class="card user-visitors">
+	            <div class="card-header card-header-transparent p-20">
+	              <h4 class="card-title mb-0 text-center">Currículo</h4>
+	            </div>
+	            <div class="card-block">
+		            
+		            {% set cext = fext(user.curriculo) %}
+					{% set al = 'Presionar "Ver Currículo" para abrir este abrir el currículo de este solicitante' %}
+
+					{% if 'pdf' == cext %}
+						{% set ic = '<i style="font-size: 100px;" class="fa fa-file-pdf-o"></i>' %}
+					{% elseif 'docx' == cext %}
+						{% set ic = '<i style="font-size: 100px;" class="fa fa-file-word-o"></i>' %}
+					{% else %}
+					    {% set ic = '<i style="font-size: 100px;" class="fa fa-file-o"></i>' %}
+						{% set al = 'No hay currículo subido' %}
+					{% endif %}
+
+					<p class="text-center">{{al}}</p>
+					<p class="text-center">{{ic|raw}}</p>
+					
+
+		            <div class="text-center">
+		                <button class="btn btn-round btn-outline btn-primary" type="button" name="button">Ver Currículo</button>
+		            </div>
+		        </div>
+	          </div>
+	          <div class="card user-may-know">
+	            <div class="card-header card-header-transparent p-20">
+	              	<h4 class="card-title mb-0 text-center">Grupos</h4>	              	
+	            </div>
+	            <div class="card-block text-center">
+
+					{% if pend %}
+	              	<p>Este Solicitante no pertenece todavía a ningun grupo.</p>
+	              	{% endif %}
+
+					{% for g in grupos if false != grupos %}
+					<a class="inline-block mr-5 ml-5" href="#">
+
+						<div class="avatar avatar-online avatar-lg m-5">
+			                <img src="public/dev/images/group-icon.png" alt="public/dev/images/group-icon.png" />
+			                <i></i>
+			            </div>
+			            <b class="block">{{g.grupo}}</b>
+		            </a>
+					{% endfor %}
+		            
+	              
+	            </div>
+	            {#<div class="card-block">
+	              <div class="input-search">
+	                <button class="input-search-btn" type="button" name="button">
+	                  <i class="icon wb-search" aria-hidden="true"></i>
+	                </button>
+	                <input class="form-control" type="text" name="search" placeholder="Search...">
+	              </div>
+	            </div>#}
+	          </div>
+	        </div>
+	    
+	      </div>
+	    </div>
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/slick-carousel/slick.js"></script>
+	<script src="public/classic/topbar/assets/examples/js/pages/profile-v2.js"></script>
+</body>
+</html>
+{% endblock %}
