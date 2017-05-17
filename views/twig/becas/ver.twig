@@ -1,0 +1,56 @@
+{% extends 'templates/header' %}
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/topbar/assets/examples/css/apps/documents.css">
+{% endblock %}
+{% block content %}
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+		<div class="page-header page-header-bordered text-center">
+			<h1 class="page-title">Infomación acerca de la beca</h1>
+		</div>
+	    <div class="page-content pt-20">
+	    	<div class="row">
+	    		<div class="col-xl-3 col-md-4 col-sm-6 col-xs-12">
+	    			<div class="card">
+	    				<img class="card-img-top img-fluid w-full h-300" src="{{beca.perfil}}" alt="{{beca.perfil}}">
+	    				<div class="card-block">
+	    					<div class="row">
+	    						<div class="col-xs-12 col-md-6 col-xl-6 mt-10">
+		    						<mark class="mr-10">Sede:</mark> <b> {{beca.sede}}</b>
+		    					</div>
+
+		    					<div class="col-xs-12 col-md-6 col-xl-6 mt-10">
+		    						<mark class="mr-10">Tipo:</mark> <b> {{beca.tipo}}</b>
+		    					</div>
+	    					</div>
+	    					
+	    				</div>
+	    			</div>
+	    		</div>
+
+	    		<div class="col-xl-9 col-md-8 col-sm-6 col-xs-12">
+	    			<div class="card">
+	    				<div class="card-header card-header-transparent card-header-bordered text-center">
+	    					<h4>{{beca.beca}}</h4>
+	    				</div>
+	    				<div class="card-block">
+	    					{{beca.descripcion|raw}}
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/imagesloaded/imagesloaded.pkgd.js"></script>
+  	<script src="public/classic/global/vendor/masonry/masonry.pkgd.js"></script>
+  	<script src="public/classic/global/js/Plugin/masonry.js"></script>
+  	<script src="public/classic/global/js/Plugin/plyr.js"></script>
+</body>
+</html>
+{% endblock %}

@@ -8,7 +8,7 @@ class EstadosController extends Controllers{
     private $e;
 
     public function __construct(Estados $e) {
-        parent::__construct(true);
+        parent::__construct(true,true);
         $this->e = $e;
     }
 

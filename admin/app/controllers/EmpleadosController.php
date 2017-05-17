@@ -8,7 +8,7 @@ class EmpleadosController extends Controllers{
     private $e;
 
     public function __construct(Empleados $e) {
-        parent::__construct(true);
+        parent::__construct(true,true);
         $this->e = $e;
     }
 

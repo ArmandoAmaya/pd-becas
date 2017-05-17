@@ -8,7 +8,7 @@ class BecasController extends Controllers{
     private $b;
 
     public function __construct(Becas $b) {
-        parent::__construct(true);
+        parent::__construct(true,true);
         $this->b = $b;
     }
 

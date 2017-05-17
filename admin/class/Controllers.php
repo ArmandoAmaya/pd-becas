@@ -14,7 +14,7 @@ abstract class Controllers{
     /**
      * Constructor: Inicia la configuracion por defecto para todos los controladores
      */
-    protected function __construct(bool $authLog = false, bool $authUnlog = false) {
+    protected function __construct(bool $authLog = false, bool $adminOnly = false, bool $authUnlog = false) {
 
         # Llamado del request
         global $request;
@@ -25,6 +25,13 @@ abstract class Controllers{
         }
         # Para usuarios no logeados
         if (isset($_SESSION[SESSION_ID]) && $authUnlog) {
+            Str::redir();
+        }
+        if (isset($_SESSION['rango']) and 0 == $_SESSION['rango']) {
+            Str::redir('../');
+        }
+
+        if (isset($_SESSION['rango']) and $_SESSION['rango'] != 2 and $adminOnly) {
             Str::redir();
         }
 

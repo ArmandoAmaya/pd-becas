@@ -6,7 +6,7 @@ defined('INDEX') or die('No estas en index');
 class AdminsController extends Controllers{
     private $data;
     public function __construct(Admins $a) {
-        parent::__construct(true);
+        parent::__construct(true,true);
         $this->data = $a;
        
     }

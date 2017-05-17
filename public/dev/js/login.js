@@ -1,5 +1,6 @@
 
 $('#login_submit').click(function(e){
+	
 	e.preventDefault();
 	
 	var l = Ladda.create( document.querySelector( '#login_submit' ) );
@@ -16,7 +17,7 @@ $('#login_submit').click(function(e){
 			if (obj.success == true) {
 				toastr.success(obj.msg, '<b>¡Realizado!</b>');
 				setTimeout(function(){
-					location.reload();
+					obj.url == '' ? location.reload() : window.location.href = obj.url;
 				}, 1000);
 			}else{
 				toastr.error(obj.msg, '<b>¡Error!</b>');

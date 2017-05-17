@@ -15,7 +15,7 @@ class LogoutController extends Controllers{
      */
 
     public function index(){
-        unset($_SESSION[SESSION_ID]);
+        unset($_SESSION[SESSION_ID],$_SESSION['rango']);
         session_write_close();
         session_unset();
 

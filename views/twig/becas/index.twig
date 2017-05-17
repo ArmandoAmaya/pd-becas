@@ -1,0 +1,57 @@
+{% extends 'templates/header' %}
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/plyr/plyr.css">
+{% endblock %}
+{% block content %}
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+		<div class="page-header page-header-bordered text-center">
+			<h1 class="page-title">PD-Becas</h1>
+			<h4 class="example-title">Encuentra información acerca de una beca.</h4>
+		</div>
+	    <div class="{#page-content#} pt-20">
+	      	
+	      	 <div class="row" data-plugin="masonry">
+	      	 	{% for beca in becas if false != becas %}
+	      		<div class="col-xl-4 col-md-6 col-sm-12 masonry-item">
+			        <div class="card">
+			            <div class="card-img-left">
+			              	<div class="cover-background" style="background-image: url('{{get_thumb('public/dev/images/becas/' ~ beca.id ~ '/')}}');background-size: 100% 100%;"></div>
+			            </div>
+			            <div class="card-block">
+				            <p class="card-text">
+				                <small>
+				                  <span class="card-author">Tipo: {{beca.tipo}}</span> /
+				                  <span class="card-category">Sede: {{beca.sede}}</span>
+				                </small>
+				            </p>
+			              	<h3 class="card-title">{{beca.beca}}</h3>
+			              	<p class="card-text"></p>
+			            </div>
+			            <div class="card-block clearfix">
+				            <a class="btn btn-outline btn-default card-link float-right" href="becas/ver/{{beca.id}}/{{slug(beca.beca)}}">
+				                <i class="icon wb-chevron-right-mini"></i> Leer más
+				            </a>
+			            </div>
+			        </div>
+		        </div>
+				{% endfor %}
+	      	</div>  
+	      	
+	      	
+			
+	    </div>
+	    
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/imagesloaded/imagesloaded.pkgd.js"></script>
+  	<script src="public/classic/global/vendor/masonry/masonry.pkgd.js"></script>
+  	<script src="public/classic/global/js/Plugin/masonry.js"></script>
+  	<script src="public/classic/global/js/Plugin/plyr.js"></script>
+</body>
+</html>
+{% endblock %}

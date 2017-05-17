@@ -129,7 +129,8 @@ final class Empleados extends Models{
 			'rango' => 1,
 			'id_personal' => (int) $this->id,
 			'usuario' => $this->e,
-			'clave' => Str::bcrypt($request['pass'])
+			'clave' => Str::bcrypt($request['pass']),
+			'activo' => 1
 		);
 
 		$this->db->pInsert($u, 'usuarios');

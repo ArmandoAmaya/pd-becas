@@ -115,7 +115,8 @@ final class Admins extends Models{
 			'rango' => 2,
 			'id_personal' => (int) $this->id,
 			'usuario' => $this->e,
-			'clave' => Str::bcrypt($request['pass'])
+			'clave' => Str::bcrypt($request['pass']),
+			'activo' => 1
 		);
 
 		$this->db->pInsert($u, 'usuarios');

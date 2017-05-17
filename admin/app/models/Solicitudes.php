@@ -181,11 +181,7 @@ final class Solicitudes extends Models{
 		return array('success' => true, 'msg' => 'Solicitante evaluado de forma exitosa.');
 	}
 	
-	# Borra un registro 
-	public function Delete(int $id){
-		$this->db->pDelete($this->table, "id_solicitante='$id'");
-		return array('success' => true);
-	}
+	
 
 	public function __destruct() {
 		parent::__destruct();

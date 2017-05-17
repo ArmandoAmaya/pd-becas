@@ -1,0 +1,75 @@
+{% extends 'templates/header' %}
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/plyr/plyr.css">
+{% endblock %}
+{% block content %}
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+		<div class="page-header page-header-bordered text-center">
+			<h1 class="page-title">Contacto</h1>
+			<h4 class="example-title">Puedes enviarnos un mensaje o contactarnos a través de nuestras redes sociales</h4>
+		</div>
+	    <div class="page-content pt-20">
+			
+			<div class="card">
+				<div class="row">
+					<div class="card-block col-sm-12 col-md-6 col-xs-12">
+						<h4 class="text-center example-title">Formulario de contacto</h4>
+						<hr>
+						<div class="col-xs-12">
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label class="form-control-label" for="name">Nombre</label>
+									<input type="text" name="name" id="name" placeholder="Coloca tu nombre" class="form-control">
+								</div>
+
+								<div class="col-md-6 form-group">
+									<label class="form-control-label" for="name">Apellido</label>
+									<input type="text" name="ape" id="ape" placeholder="Coloca tu apellido" class="form-control">
+								</div>
+
+								<div class="col-md-12 form-group">
+									<label class="form-control-label" for="email">Correo Electrónico</label>
+									<input type="email" name="email" id="email" placeholder="Ej: mail@correo.com" class="form-control">
+								</div>
+
+								<div class="col-md-12 form-group">
+									<label class="form-control-label" for="message">Mensaje</label>
+									<textarea name="message" id="message" rows="3" class="form-control" placeholder="Escribe tu mensaje" ></textarea>
+								</div>
+								<div class="form-group col-md-12">
+									<button type="button" class="btn btn-primary btn-outline">Enviar <i class="ml-10 wb-envelope"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-block col-sm-12 col-md-6 col-xs-12">
+						<h4 class="text-center example-title">Redes sociales</h4>
+						<hr>
+						<div class="col-xs-12 text-center">
+							<div class="py-30">							
+							{% for i,s in social_icons('14') %}
+				            	<a data-toggle="tooltip" class="btn btn-icon social-{{i}} text-white" href="javascript:void;" data-original-title="{{i|capitalize}}">{{ s|raw }}</a>
+				            {% endfor %}
+							</div>
+				            <p>Ponte en contacto con nosotros a través de nuestras redes sociales</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+	    </div>
+	    
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/imagesloaded/imagesloaded.pkgd.js"></script>
+  	<script src="public/classic/global/vendor/masonry/masonry.pkgd.js"></script>
+  	<script src="public/classic/global/js/Plugin/masonry.js"></script>
+  	<script src="public/classic/global/js/Plugin/plyr.js"></script>
+</body>
+</html>
+{% endblock %}

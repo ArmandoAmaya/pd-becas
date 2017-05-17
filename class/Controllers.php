@@ -28,6 +28,7 @@ abstract class Controllers{
         if (isset($_SESSION[SESSION_ID]) && $authUnlog) {
             Str::redir();
         }
+        
 
         $this->id = (sizeof($request->_getargs()) === 1 and is_numeric($request->_getargs()[0]));
 
@@ -62,6 +63,7 @@ abstract class Controllers{
             $this->view->addExtension(new Boots);
             $this->view->addExtension(new Fl);
             $this->view->addExtension(new Val);
+            $this->view->addExtension(new Str);
             $this->view->addExtension(new Twig_Extension_Debug());
 
         }else{

@@ -1,0 +1,70 @@
+{% extends 'templates/header' %}
+{% block CssBlock %}
+<link rel="stylesheet" href="public/classic/global/vendor/plyr/plyr.css">
+{% endblock %}
+{% block content %}
+	
+	{% include 'templates/nav' %}
+	
+	<div class="page">
+		<div class="page-header page-header-bordered text-center">
+			<h1 class="page-title">Grupos</h1>
+			<h4 class="example-title">Información acerca de los grupos de trabajo</h4>
+		</div>
+	    <div class="page-content pt-20">
+
+			{% if false != grupos %}
+			<div class="row">
+				
+			
+				{% for g in grupos %}
+		      	<div class="col-md-4 col-xl-4 col-xxl-3 col-sm-6 col-xs-12">
+		      		<div class="card">
+		              	{# <img class="card-img-top img-fluid w-full" src="../../../global/photos/placeholder.png" alt="Card image cap"> #}
+			            <div class="card-block">
+			                <h4 class="card-title">{{g.grupo}}</h4>
+			                <p class="card-text">Información del grupo</p>
+			            </div>
+			            <ul class="list-group list-group-dividered px-20 mb-0">
+			            	{% set horario = 1 == g.formato ? g.hora_entrada|date('g:i a') ~ ' - ' ~ g.hora_salida|date('g:i a') :  g.hora_entrada|date('H:i') ~ ' - ' ~ g.hora_salida|date('H:i')  %}
+			                <li class="list-group-item px-0"><span class="mr-10">Horario:</span>  <span class="font-weight-500 ">{{horario}}</span></li>
+			                {% if g.cupos >= 90  %}
+								{% set bdg = 'info' %}
+							{% elseif g.cupos >= 30 and g.cupos < 90 %}
+								{% set bdg = 'warning' %}
+							{% elseif g.cupos < 30 %}
+								{% set bdg = 'danger' %}
+							{% endif %}															                   
+																                    
+			                <li class="list-group-item px-0"><span class="mr-10">Cupos:</span> <span class="badge badge-pill badge-{{bdg}}">{{g.cupos}}</span></li>
+			                <li class="list-group-item px-0">
+			                	<span class="mr-10">Dias de cumplimiento</span>
+			                	{% for dia in json_to_array(g.dias) %}
+								    <span class="badge badge-outline badge-primary mr-10">{{dia}}</span>
+								{% endfor %}
+			                </li>
+			            </ul>
+			            
+		            </div>
+		      	</div>
+		      	{% endfor %}
+
+	      	</div>
+	      	{% else %}
+	      	<div class="alert alert-info">
+	    		<strong>Información: </strong> No hay grupos disponibles.
+	    	</div>
+	      	{% endif %}
+	    </div>
+	    
+	</div>
+
+
+	{% include 'templates/footer' %}
+	<script src="public/classic/global/vendor/imagesloaded/imagesloaded.pkgd.js"></script>
+  	<script src="public/classic/global/vendor/masonry/masonry.pkgd.js"></script>
+  	<script src="public/classic/global/js/Plugin/masonry.js"></script>
+  	<script src="public/classic/global/js/Plugin/plyr.js"></script>
+</body>
+</html>
+{% endblock %}

@@ -21,6 +21,7 @@ final class Gen extends Twig_Extension{
 
 	}
 	
+	
 	// -----------------------------------
 	/**
 	 * Convierte un json en un array

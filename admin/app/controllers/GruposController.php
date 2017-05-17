@@ -7,7 +7,7 @@ class GruposController extends Controllers{
 
     private $g;
     public function __construct(Grupos $g) {
-        parent::__construct(true);
+        parent::__construct(true,true);
         $this->g = $g;
 
     }

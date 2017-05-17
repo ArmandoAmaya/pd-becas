@@ -40,8 +40,17 @@ final class Register extends Models{
 			$e = array_keys($f->get_location('estado'));
 			$m = array_keys($f->get_location('municipio'));
 			$p = array_keys($f->get_location('parroquia'));
+			
 			if (!in_array($request['estado'], $e)) {
 				throw new Exception('Debes seleccionar un Estado.');
+			}
+
+			if (!isset($request['municipio'])) {
+				throw new Exception('El Estado seleccionado no contiene Municipios, debes seleccionar un Estado con Municipios.');
+			}
+
+			if (!isset($request['parroquia'])) {
+				throw new Exception('El Municipio seleccionado no contiene Parroquias, debes seleccionar un Municipio con Parroquias.');
 			}
 
 			if (!in_array($request['municipio'], $m)) {

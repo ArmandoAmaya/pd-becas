@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-05-2017 a las 04:16:49
+-- Tiempo de generación: 17-05-2017 a las 03:49:32
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pdvsa`
 --
+CREATE DATABASE IF NOT EXISTS `pdvsa` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `pdvsa`;
 
 -- --------------------------------------------------------
 
@@ -35,17 +37,6 @@ CREATE TABLE `beca` (
   `perfil` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `beca`
---
-
-INSERT INTO `beca` (`id`, `beca`, `tipo`, `sede`, `descripcion`, `perfil`) VALUES
-(1, 'Beca #1', 'Estudiantil', '5 de Julio', '<h3 style=\"text-align: center; \"><b>Lorem ipsum dolor sit amet, consectetur adipisicing elit</b></h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p><p>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p><p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p><p>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</p><p>cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p><p>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', './public/dev/images/becas/1/1.png'),
-(2, 'Beca #3', 'Estudiantil', '5 de Julio ', '<h2 style=\"text-align: center; \">&nbsp; <b>&nbsp;&nbsp;<span style=\"font-size: 1rem;\">Lorem ipsum dolor sit amet</span></b></h2><h2 style=\"text-align: center; \"><b><span style=\"font-size: 1rem;\"><br></span></b></h2><ol><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</li><li>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</li><li>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li><li>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</li><li>cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</li><li>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li></ol>', './public/dev/images/becas/2/2.jpg'),
-(3, 'Beca #2', 'Estudiantil', '5 de julio', '<p><br></p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p><p>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p><p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p><p>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</p><p>cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p><p>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', './public/dev/images/becas/3/3.jpg'),
-(4, 'Beca #4', 'Estudiante', '5 de julio', '<p><br></p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p><p>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p><p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p><p>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</p><p>cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p><p>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', './public/dev/images/becas/4/4.jpg'),
-(5, 'Beca #5', 'estudiantil', '5 de julio', '<p>asdadsadsadsadadas</p>', './public/dev/images/becas/5/5.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -57,13 +48,6 @@ CREATE TABLE `beca_solicitante` (
   `id_beca` int(11) NOT NULL,
   `id_solicitante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-
---
--- Volcado de datos para la tabla `beca_solicitante`
---
-
-INSERT INTO `beca_solicitante` (`id`, `id_beca`, `id_solicitante`) VALUES
-(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -80,15 +64,6 @@ CREATE TABLE `entrevista` (
   `lugar` varchar(70) NOT NULL,
   `formato` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `entrevista`
---
-
-INSERT INTO `entrevista` (`id`, `titulo`, `mensaje`, `fecha`, `hora`, `lugar`, `formato`) VALUES
-(1, 'Entrevista 1', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p><p>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p><p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p><p>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</p><p>cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p><p>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 1493611200, 1493634600, 'La estancia 5 de Julio', 1),
-(2, 'Entrevista 2', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p><p>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p><p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p><p>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</p><p>cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p><p>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 1493697600, 1493627100, 'La estancia 5 de Julio', 1),
-(3, 'Entrevista 3', '<h2 style=\"text-align: center;\"><font face=\"Arial Black\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</font></h2><p style=\"text-align: center;\"><font face=\"Arial Black\"><br></font></p><p style=\"text-align: center;\"><span style=\"font-size: 1rem;\">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><br></p><p style=\"text-align: center;\">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p><p style=\"text-align: center;\">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\n<br class=\"Apple-interchange-newline\"></p><p style=\"text-align: center;\">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p><p style=\"text-align: center;\">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 1493697600, 1493638500, '5 de Julio la estancia', 1);
 
 -- --------------------------------------------------------
 
@@ -147,14 +122,6 @@ CREATE TABLE `grupo` (
   `formato` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `grupo`
---
-
-INSERT INTO `grupo` (`id`, `grupo`, `dias`, `hora_entrada`, `hora_salida`, `cupos`, `formato`) VALUES
-(1, 'Grupo #1', '[\"Lunes\",\"Miercoles\",\"Jueves\"]', 1493569800, 1493587800, 94, 1),
-(2, 'Grupo #2', '[\"Martes\",\"Jueves\",\"Sabado\"]', 1491593400, 1491600600, 142, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -166,13 +133,6 @@ CREATE TABLE `grupo_solicitante` (
   `id_grupo` int(11) NOT NULL,
   `id_solicitante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-
---
--- Volcado de datos para la tabla `grupo_solicitante`
---
-
-INSERT INTO `grupo_solicitante` (`id`, `id_grupo`, `id_solicitante`) VALUES
-(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -250,8 +210,7 @@ CREATE TABLE `personal` (
 --
 
 INSERT INTO `personal` (`id`, `nombre`, `apellido`, `cedula`, `correo`, `genero`, `direccion`, `telefono1`, `telefono2`, `fecha_nacimiento`, `fecha_ingreso`, `perfil`) VALUES
-(1, 'Admin', 'Admin', 25444777, 'admin@demo.com', 'masculino', NULL, NULL, NULL, NULL, 1494126066, './public/dev/images/default.png'),
-(2, 'Solicitante', 'Solicitante', 23444888, 'solicitante@demo.com', 'masculino', 'xdadsadadadadadadasd', '04248885599', '', 794203200, 1494146076, './public/dev/images/solicitantes/1/1.png');
+(1, 'Admin', 'Admin', 25444777, 'admin@demo.com', 'masculino', NULL, NULL, NULL, NULL, 1494126066, './public/dev/images/default.png');
 
 -- --------------------------------------------------------
 
@@ -271,13 +230,6 @@ CREATE TABLE `solicitante` (
   `redes_sociales` text NOT NULL,
   `tiempo_solicitud` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-
---
--- Volcado de datos para la tabla `solicitante`
---
-
-INSERT INTO `solicitante` (`id`, `id_estado`, `id_municipio`, `id_parroquia`, `condicion`, `nacionalidad`, `curriculo`, `id_personal`, `redes_sociales`, `tiempo_solicitud`) VALUES
-(1, 1, 1, 1, 1, 'E', './public/dev/images/solicitantes/1/1_curriculo_.docx', 2, '{\"facebook\":\"https:\\/\\/facebook.com\\/\",\"dribbble\":\"https:\\/\\/dibble.com\\/\",\"instagram\":\"https:\\/\\/instagram.com\\/\",\"youtube\":\"https:\\/\\/youtube.com\\/\",\"evernote\":\"https:\\/\\/evermote.com\\/\"}', 1494207044);
 
 -- --------------------------------------------------------
 
@@ -312,8 +264,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `rango`, `id_personal`, `usuario`, `clave`, `activo`, `keyreg`) VALUES
-(1, 2, 1, 'admin@demo.com', '$2y$10$ER8z8ywDoSAY/bdlcOMy7ecYMSFlEgrOmddpJjfuQWqBdHLK9EUmm', 1, ''),
-(2, 0, 2, 'solicitante@demo.com', '$2y$10$CN5xGh6qPabq4INlzzIuQO95TYFUB0rqpnIOrNmh/0nhrd2v0rNAq', 1, '');
+(1, 2, 1, 'admin@demo.com', '$2y$10$ER8z8ywDoSAY/bdlcOMy7ecYMSFlEgrOmddpJjfuQWqBdHLK9EUmm', 1, '');
 
 --
 -- Índices para tablas volcadas
@@ -410,17 +361,17 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `beca`
 --
 ALTER TABLE `beca`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `beca_solicitante`
 --
 ALTER TABLE `beca_solicitante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `entrevista`
 --
 ALTER TABLE `entrevista`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `estado`
 --
@@ -430,12 +381,12 @@ ALTER TABLE `estado`
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `grupo_solicitante`
 --
 ALTER TABLE `grupo_solicitante`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `municipio`
 --
@@ -450,12 +401,12 @@ ALTER TABLE `parroquia`
 -- AUTO_INCREMENT de la tabla `personal`
 --
 ALTER TABLE `personal`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `solicitante`
 --
 ALTER TABLE `solicitante`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `solicitante_entrevista`
 --
@@ -465,7 +416,7 @@ ALTER TABLE `solicitante_entrevista`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Restricciones para tablas volcadas
 --

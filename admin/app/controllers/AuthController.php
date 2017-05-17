@@ -6,7 +6,9 @@ class AuthController extends Controllers{
 
     public function __construct() {
         # Solo accesible por usuarios no logeados
-        parent::__construct(false, true);
+        parent::__construct(false, false,true);
+        
+
     }
 
     // -------------------------------------------------

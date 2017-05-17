@@ -216,7 +216,7 @@ final class Perfil extends Models{
 		);
 		$this->db->pUpdate($d, 'solicitante', "id_personal='$this->user_id'");
 
-		$this->id = (int) ($this->db->pSelect('id', 'solicitante', "id_personal='$this->user_id'", 'LIMIT 1'));
+		$this->id = (int) ($this->db->pSelect('id', 'solicitante', "id_personal='$this->user_id'", 'LIMIT 1')[0][0]);
 		
 		$this->upload_file($this->dir, $this->id, $this->user_id);
 
@@ -250,7 +250,7 @@ final class Perfil extends Models{
 	final public function Solicitud(array $request){
 		try {
 
-			$id_solicitante = (int) $this->db->pSelect('id', 'solicitante', "id_personal='$this->user_id'", 'LIMIT 1');
+			$id_solicitante = (int) $this->db->pSelect('id', 'solicitante', "id_personal='$this->user_id'", 'LIMIT 1')[0][0];
 			$id_grupo = (int) $request['id_grupo'];
 			$id_beca = (int) $request['id_beca'];
 

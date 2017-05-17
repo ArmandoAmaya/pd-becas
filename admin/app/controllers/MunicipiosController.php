@@ -8,7 +8,7 @@ class MunicipiosController extends Controllers{
     private $m;
 
     public function __construct(Municipios $m) {
-        parent::__construct(true);
+        parent::__construct(true,true);
         $this->m = $m;
 
     }

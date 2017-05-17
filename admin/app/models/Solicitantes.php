@@ -182,7 +182,8 @@ final class Solicitantes extends Models{
 			'rango' => 0,
 			'id_personal' => $id_personal,
 			'usuario' => $this->e, 
-			'clave' => Str::bcrypt($pass)
+			'clave' => Str::bcrypt($pass),
+			'activo' => 1
 		], 'usuarios');
 
 		$d = array(
@@ -415,6 +416,24 @@ final class Solicitantes extends Models{
 	# Borra un registro 
 	public function Delete(int $id){
 		$this->db->pDelete($this->table, "id='$id'");
+
+		$where = "id_solicitante = '$id'";
+
+		if (false != $this->db->pSelect('id', 'grupo_solicitante', $where, 'LIMIT 1')) {
+			$this->db->pDelete('grupo_solicitante', $where);
+		}
+
+		if (false != $this->db->pSelect('id', 'beca_solicitante', $where, 'LIMIT 1')) {
+			$this->db->pDelete('beca_solicitante', $where);
+		}
+
+		if (false != $this->db->pSelect('id', 'grupo_solicitante', $where, 'LIMIT 1')) {
+			$this->db->pDelete('grupo_solicitante', $where);
+		}
+
+		if (false != $this->db->pSelect('id', 'solicitante_entrevista', $where, 'LIMIT 1')) {
+			$this->db->pDelete('solicitante_entrevista', $where);
+		}
 		return array('success' => true);
 	}
 

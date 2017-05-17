@@ -12,15 +12,13 @@ final class Login extends Models{
 
 	final private function Errors(array $request) {
 		try {
-			
-
 
 			if (!Val::Email($request['email'])) {
 				throw new Exception('El email debe tener un formato válido.');
 			}
 
 			$this->u = $request['email'];
-			$this->user = $this->db->pSelect('id,clave,activo', "usuarios", "usuario='$this->u'", 'LIMIT 1');
+			$this->user = $this->db->pSelect('id,clave,activo,rango', "usuarios", "usuario='$this->u' AND rango = '0'", 'LIMIT 1');
 			if (false == $this->user or !Str::ccrypt($request['password'], $this->user[0]['clave'])) {
 				throw new Exception('Credenciales incorrectas.');
 			}
@@ -42,8 +40,13 @@ final class Login extends Models{
 		}
 
 		$_SESSION[SESSION_ID] = $this->user[0][0]; 
+		$_SESSION['rango'] = $this->user[0]['rango'];
 
-		return array('success' => true, 'msg' => 'Te estamos redireccionando...');
+		if ($_SESSION['rango'] > 1) {
+			return array('success' => true, 'msg' => 'Te estamos redireccionando...', 'url' => URL . 'admin/');
+		}
+
+		return array('success' => true, 'msg' => 'Te estamos redireccionando...', 'url' => '');
 	}
 
 	

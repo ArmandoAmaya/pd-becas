@@ -8,7 +8,7 @@ class ParroquiasController extends Controllers{
     private $p;
 
     public function __construct(Parroquias $p) {
-        parent::__construct(true);
+        parent::__construct(true,true);
         $this->p = $p;
     }
 

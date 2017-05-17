@@ -15,7 +15,7 @@ date_default_timezone_set('America/Caracas');
 // ---------------------------------------
 
 # Constantes del sistema
-define('URL', 'http://localhost:8080/pdvsa/');
+define('URL', 'http://localhost/pdvsa/');
 define('TITLE', 'Panel administrativo PDVSA');
 define('MONEY', 'Bs');
 define('SESSION_ID', 'session_id');

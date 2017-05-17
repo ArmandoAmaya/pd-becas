@@ -40,7 +40,6 @@
                     <table class="table table-hover dataTable table-striped w-full" id="exampleTableSearch">
                     <thead>
                         <tr>
-                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Correo</th>
@@ -51,7 +50,6 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Correo</th>
@@ -64,7 +62,6 @@
                             {% for d in data if false != data %}
 
                             <tr id="tr_admins_{{d.id}}">
-                                <td style="vertical-align: middle;">{{ d.id }}</td>
                                 <td style="vertical-align: middle;">{{ d.nombre }}</td>
                                 <td style="vertical-align: middle;">{{ d.apellido }}</td>
                                 <td style="vertical-align: middle;">{{ d.correo }}</td>

@@ -2,23 +2,20 @@
 // -------------------------------------------------
 defined('INDEX') or die('No estas en index');
 // -------------------------------------------------
-class LogoutController extends Controllers{
-
+class ContactoController extends Controllers{
+ 
     public function __construct() {
         parent::__construct();
+     
     }
 
     // -------------------------------------------------
 
     /**
-     * Método para deslogear al usurio logeado
+     * Método - Vista principal de contacto
      */
 
     public function index(){
-        unset($_SESSION[SESSION_ID], $_SESSION['rango']);
-        session_write_close();
-        session_unset();
-
-        Str::redir();
+        echo $this->view->render('contacto/index');
     }
 }
